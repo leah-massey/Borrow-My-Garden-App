@@ -1,0 +1,7 @@
+# BorrowMyGardenMain
+
+## Package
+```
+./gradlew distZip
+```
+
