@@ -2,6 +2,7 @@ package com.example.PostGresTests
 
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
+import com.natpryce.hamkrest.assertion.assertThat
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.BeforeEach
@@ -9,6 +10,8 @@ import org.junit.jupiter.api.Test
 import org.postgresql.ds.PGSimpleDataSource
 import java.util.UUID
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
+import kotlin.test.expect
 
 class PostgresTestsGardens {
 
@@ -42,8 +45,17 @@ class PostgresTestsGardens {
             assertEquals(readGardens, listOf(garden))
         }
     }
+
+    @Test
+    fun `a gardens table is initially empty`() {
+        transaction(database) {
+            val readGardens: List<Garden> = GardensTable.all()
+            assertEquals(readGardens, emptyList())
+        }
+    }
 }
-private fun GardensTable.insert(garden: Garden) {
+
+fun GardensTable.insert(garden: Garden) {
     insert {
         it[id] = garden.id
         it[created_timestamp] = garden.createdTimestamp
@@ -55,11 +67,11 @@ private fun GardensTable.insert(garden: Garden) {
     }
 }
 
-private fun GardensTable.all() = selectAll().map {
+fun GardensTable.all() = selectAll().map {
     it.toGarden()
 }
 
-private fun ResultRow.toGarden(): Garden {
+fun ResultRow.toGarden(): Garden {
     val id = this[GardensTable.id]
     val createdTimestamp = this[GardensTable.created_timestamp]
     val title = this[GardensTable.title]
