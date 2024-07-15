@@ -54,15 +54,20 @@ private fun Gardens.insert(garden: Garden) {
         it[garden_status] = garden.gardenStatus
     }
 }
+
 private fun Gardens.all() = selectAll().map {
-    val id = it[id]
-    val createdTimestamp = it[created_timestamp]
-    val title = it[title]
-    val description = it[description]
-    val gardenOwnerFirstName = it[garden_owner_first_name]
-    val gardenOwnerId = it[garden_owner_id]
-    val gardenStatus = it[garden_status]
-    Garden(
+    it.toGarden()
+}
+
+private fun ResultRow.toGarden(): Garden {
+    val id = this[Gardens.id]
+    val createdTimestamp = this[Gardens.created_timestamp]
+    val title = this[Gardens.title]
+    val description = this[Gardens.description]
+    val gardenOwnerFirstName = this[Gardens.garden_owner_first_name]
+    val gardenOwnerId = this[Gardens.garden_owner_id]
+    val gardenStatus = this[Gardens.garden_status]
+    return Garden(
         id,
         createdTimestamp = createdTimestamp,
         title,
@@ -72,7 +77,6 @@ private fun Gardens.all() = selectAll().map {
         gardenStatus = gardenStatus
     )
 }
-
 
 
 object Gardens: Table() {
