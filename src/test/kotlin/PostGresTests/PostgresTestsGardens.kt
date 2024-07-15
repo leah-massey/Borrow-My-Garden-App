@@ -49,8 +49,7 @@ class PostgresTestsGardens {
     @Test
     fun `a gardens table is initially empty`() {
         transaction(database) {
-            val readGardens: List<Garden> = GardensTable.all()
-            assertEquals(readGardens, emptyList())
+            assertEquals(GardensTable.all(), emptyList())
         }
     }
 }
