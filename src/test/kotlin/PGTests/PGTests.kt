@@ -31,31 +31,34 @@ class PGTests {
         }
     }
     @Test
-    fun `a User can be added to and retrieved from the database`() {
+    fun `a user can be added to and retrieved from the database`() {
         val user = User(UUID.randomUUID(), "Jenny", "Long", MembershipStatus.ACTIVE )
-
-
         transaction(database) {
-            // add user to db
-            Users.insert {
-                it[id] = user.id
-                it[firstName] = user.firstName
-                it[secondName] = user.secondName
-                it[membershipStatus] = user.membershipStatus
-            }
-            // retrieve users from db
-            val readUsers: List<User> = Users.selectAll().map {
-                val id = it[Users.id]
-                val firstName = it[Users.firstName]
-                val secondName = it[Users.secondName]
-                val membershipStatus = it[Users.membershipStatus]
-                User(id, firstName, secondName, membershipStatus)
-            }
+            Users.insert(user)
+            val readUsers: List<User> = Users.all()
             assertEquals(readUsers, listOf(user))
         }
-
     }
 }
+private fun Users.insert(user: User) {
+    insert {
+        it[id] = user.id
+        it[firstName] = user.firstName
+        it[secondName] = user.secondName
+        it[membershipStatus] = user.membershipStatus
+    }
+}
+private fun Users.all(): List<User> {
+    val readUsers: List<User> = selectAll().map {
+        val id = it[id]
+        val firstName = it[firstName]
+        val secondName = it[secondName]
+        val membershipStatus = it[membershipStatus]
+        User(id, firstName, secondName, membershipStatus)
+    }
+    return readUsers
+}
+
 
 object Users: Table() {
     val id: Column<UUID> = uuid("id")
