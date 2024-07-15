@@ -7,12 +7,12 @@ data class Garden(
     val createdTimestamp: String,
     val title: String,
     val description: String,
-    val status: Status = Status.AVAILABLE,
+    val status: GardenStatus = GardenStatus.AVAILABLE,
     val gardenOwnerFirstName: String,
     val gardenOwnerId: UUID
 )
 
-enum class Status {
+enum class GardenStatus {
     AVAILABLE,
     NOT_AVAILABLE
 }
