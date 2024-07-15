@@ -21,8 +21,8 @@ class PostGresTestsGardens {
 
     @BeforeEach fun resetDB() {
         transaction(database) {
-            SchemaUtils.drop(Gardens)
-            SchemaUtils.createMissingTablesAndColumns(Gardens)
+            SchemaUtils.drop(GardensTable)
+            SchemaUtils.createMissingTablesAndColumns(GardensTable)
         }
     }
     @Test
@@ -37,13 +37,13 @@ class PostGresTestsGardens {
             gardenStatus = GardenStatus.AVAILABLE
         )
         transaction(database) {
-            Gardens.insert(garden)
-            val readGardens: List<Garden> = Gardens.all()
+            GardensTable.insert(garden)
+            val readGardens: List<Garden> = GardensTable.all()
             assertEquals(readGardens, listOf(garden))
         }
     }
 }
-private fun Gardens.insert(garden: Garden) {
+private fun GardensTable.insert(garden: Garden) {
     insert {
         it[id] = garden.id
         it[created_timestamp] = garden.createdTimestamp
@@ -55,18 +55,18 @@ private fun Gardens.insert(garden: Garden) {
     }
 }
 
-private fun Gardens.all() = selectAll().map {
+private fun GardensTable.all() = selectAll().map {
     it.toGarden()
 }
 
 private fun ResultRow.toGarden(): Garden {
-    val id = this[Gardens.id]
-    val createdTimestamp = this[Gardens.created_timestamp]
-    val title = this[Gardens.title]
-    val description = this[Gardens.description]
-    val gardenOwnerFirstName = this[Gardens.garden_owner_first_name]
-    val gardenOwnerId = this[Gardens.garden_owner_id]
-    val gardenStatus = this[Gardens.garden_status]
+    val id = this[GardensTable.id]
+    val createdTimestamp = this[GardensTable.created_timestamp]
+    val title = this[GardensTable.title]
+    val description = this[GardensTable.description]
+    val gardenOwnerFirstName = this[GardensTable.garden_owner_first_name]
+    val gardenOwnerId = this[GardensTable.garden_owner_id]
+    val gardenStatus = this[GardensTable.garden_status]
     return Garden(
         id,
         createdTimestamp = createdTimestamp,
@@ -79,7 +79,7 @@ private fun ResultRow.toGarden(): Garden {
 }
 
 
-object Gardens: Table() {
+object GardensTable: Table() {
     val id: Column<UUID> = uuid("id")
     val created_timestamp: Column<String> = varchar("createdTimestamp", length = 100)
     val title: Column<String> = varchar("title", length = 100)
