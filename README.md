@@ -43,3 +43,7 @@ Typically there would be two users on this platform:
 ./gradlew distZip
 ```
 
+## Getting started 
+to run the docker container:
+docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+
