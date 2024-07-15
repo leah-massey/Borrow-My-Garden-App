@@ -7,7 +7,7 @@ data class Garden(
     val createdTimestamp: String,
     val title: String,
     val description: String,
-    val status: GardenStatus = GardenStatus.AVAILABLE,
+    val gardenStatus: GardenStatus = GardenStatus.AVAILABLE,
     val gardenOwnerFirstName: String,
     val gardenOwnerId: UUID
 )
