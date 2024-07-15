@@ -15,7 +15,7 @@ import java.util.*
 import kotlin.test.assertEquals
 
 
-class PGTests {
+class PostGresTestsUser {
 
     val dataSource = PGSimpleDataSource().apply {
         user = "postgres"
