@@ -10,7 +10,7 @@ import org.postgresql.ds.PGSimpleDataSource
 import java.util.UUID
 import kotlin.test.assertEquals
 
-class PostGresTestsGardens {
+class PostgresTestsGardens {
 
     val datasource = PGSimpleDataSource().apply {
         user = "postgres"
