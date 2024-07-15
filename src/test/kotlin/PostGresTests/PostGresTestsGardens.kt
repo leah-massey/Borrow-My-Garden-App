@@ -37,30 +37,43 @@ class PostGresTestsGardens {
             gardenStatus = GardenStatus.AVAILABLE
         )
         transaction(database) {
-            Gardens.insert {
-                it[id] = garden.id
-                it[created_timestamp] = garden.createdTimestamp
-                it[title] = garden.title
-                it[description] = garden.description
-                it[garden_owner_first_name] = garden.gardenOwnerFirstName
-                it[garden_owner_id] = garden.gardenOwnerId
-                it[garden_status] = garden.gardenStatus
-            }
-            val readGardens: List<Garden> = Gardens.selectAll().map {
-                val id = it[Gardens.id]
-                val createdTimestamp = it[Gardens.created_timestamp]
-                val title = it[Gardens.title]
-                val description = it[Gardens.description]
-                val gardenOwnerFirstName = it[Gardens.garden_owner_first_name]
-                val gardenOwnerId = it[Gardens.garden_owner_id]
-                val gardenStatus = it[Gardens.garden_status]
-                Garden(id, createdTimestamp = createdTimestamp, title, description, gardenOwnerFirstName = gardenOwnerFirstName, gardenOwnerId = gardenOwnerId, gardenStatus = gardenStatus)
-            }
+            Gardens.insert(garden)
+            val readGardens: List<Garden> = Gardens.all()
             assertEquals(readGardens, listOf(garden))
         }
-
     }
 }
+private fun Gardens.insert(garden: Garden) {
+    insert {
+        it[id] = garden.id
+        it[created_timestamp] = garden.createdTimestamp
+        it[title] = garden.title
+        it[description] = garden.description
+        it[garden_owner_first_name] = garden.gardenOwnerFirstName
+        it[garden_owner_id] = garden.gardenOwnerId
+        it[garden_status] = garden.gardenStatus
+    }
+}
+private fun Gardens.all() = selectAll().map {
+    val id = it[id]
+    val createdTimestamp = it[created_timestamp]
+    val title = it[title]
+    val description = it[description]
+    val gardenOwnerFirstName = it[garden_owner_first_name]
+    val gardenOwnerId = it[garden_owner_id]
+    val gardenStatus = it[garden_status]
+    Garden(
+        id,
+        createdTimestamp = createdTimestamp,
+        title,
+        description,
+        gardenOwnerFirstName = gardenOwnerFirstName,
+        gardenOwnerId = gardenOwnerId,
+        gardenStatus = gardenStatus
+    )
+}
+
+
 
 object Gardens: Table() {
     val id: Column<UUID> = uuid("id")
