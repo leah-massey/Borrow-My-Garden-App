@@ -1,8 +1,8 @@
 package com.example.PostGresTests
 
+import com.example.database.GardensTable
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
-import com.natpryce.hamkrest.assertion.assertThat
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.BeforeEach
@@ -10,20 +10,18 @@ import org.junit.jupiter.api.Test
 import org.postgresql.ds.PGSimpleDataSource
 import java.util.UUID
 import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.expect
 
 class PostgresTestsGardens {
 
-    val datasource = PGSimpleDataSource().apply {
+    val testDatasource = PGSimpleDataSource().apply {
         user = "postgres"
-        databaseName = "borrowmygarden"
+        databaseName = "borrow_my_garden_test_db"
     }
 
-    val database = Database.connect(datasource)
+    val testDatabase = Database.connect(testDatasource)
 
     @BeforeEach fun resetDB() {
-        transaction(database) {
+        transaction(testDatabase) {
             SchemaUtils.drop(GardensTable)
             SchemaUtils.createMissingTablesAndColumns(GardensTable)
         }
@@ -39,7 +37,7 @@ class PostgresTestsGardens {
             gardenOwnerId = UUID.randomUUID(),
             gardenStatus = GardenStatus.AVAILABLE
         )
-        transaction(database) {
+        transaction(testDatabase) {
             GardensTable.insert(garden)
             val readGardens: List<Garden> = GardensTable.all()
             assertEquals(readGardens, listOf(garden))
@@ -48,7 +46,7 @@ class PostgresTestsGardens {
 
     @Test
     fun `a gardens table is initially empty`() {
-        transaction(database) {
+        transaction(testDatabase) {
             assertEquals(GardensTable.all(), emptyList())
         }
     }
@@ -90,13 +88,13 @@ fun ResultRow.toGarden(): Garden {
 }
 
 
-object GardensTable: Table() {
-    val id: Column<UUID> = uuid("id")
-    val created_timestamp: Column<String> = varchar("createdTimestamp", length = 100)
-    val title: Column<String> = varchar("title", length = 100)
-    val description: Column<String> = varchar("description", length = 1000)
-    val garden_owner_first_name: Column<String> = varchar("gardenOwnerFirstName", length = 100)
-    val garden_owner_id: Column<UUID> = uuid("gardenOwnerId")
-    val garden_status: Column<GardenStatus> = enumerationByName("gardenStatus", length = 100)
-    override val primaryKey = PrimaryKey(id, name = "PK_Gardens_Id")
-}
+//object GardensTable: Table() {
+//    val id: Column<UUID> = uuid("id")
+//    val created_timestamp: Column<String> = varchar("createdTimestamp", length = 100)
+//    val title: Column<String> = varchar("title", length = 100)
+//    val description: Column<String> = varchar("description", length = 1000)
+//    val garden_owner_first_name: Column<String> = varchar("gardenOwnerFirstName", length = 100)
+//    val garden_owner_id: Column<UUID> = uuid("gardenOwnerId")
+//    val garden_status: Column<GardenStatus> = enumerationByName("gardenStatus", length = 100)
+//    override val primaryKey = PrimaryKey(id, name = "PK_Gardens_Id")
+//}
