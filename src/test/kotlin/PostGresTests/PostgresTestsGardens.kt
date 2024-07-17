@@ -1,5 +1,6 @@
 package com.example.PostGresTests
 
+import com.example.Adapters.all
 import com.example.database.GardensTable
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
@@ -27,7 +28,7 @@ class PostgresTestsGardens {
         }
     }
     @Test
-    fun `a garden profile can be added and retrieved from the database`() {
+    fun `a garden profile can retrieved from the database`() {
         val garden = Garden(
             id = UUID.randomUUID(),
             createdTimestamp = "31081988",
@@ -64,37 +65,6 @@ fun GardensTable.insert(garden: Garden) {
     }
 }
 
-fun GardensTable.all() = selectAll().map {
-    it.toGarden()
-}
-
-fun ResultRow.toGarden(): Garden {
-    val id = this[GardensTable.id]
-    val createdTimestamp = this[GardensTable.created_timestamp]
-    val title = this[GardensTable.title]
-    val description = this[GardensTable.description]
-    val gardenOwnerFirstName = this[GardensTable.garden_owner_first_name]
-    val gardenOwnerId = this[GardensTable.garden_owner_id]
-    val gardenStatus = this[GardensTable.garden_status]
-    return Garden(
-        id,
-        createdTimestamp = createdTimestamp,
-        title,
-        description,
-        gardenOwnerFirstName = gardenOwnerFirstName,
-        gardenOwnerId = gardenOwnerId,
-        gardenStatus = gardenStatus
-    )
-}
 
 
-//object GardensTable: Table() {
-//    val id: Column<UUID> = uuid("id")
-//    val created_timestamp: Column<String> = varchar("createdTimestamp", length = 100)
-//    val title: Column<String> = varchar("title", length = 100)
-//    val description: Column<String> = varchar("description", length = 1000)
-//    val garden_owner_first_name: Column<String> = varchar("gardenOwnerFirstName", length = 100)
-//    val garden_owner_id: Column<UUID> = uuid("gardenOwnerId")
-//    val garden_status: Column<GardenStatus> = enumerationByName("gardenStatus", length = 100)
-//    override val primaryKey = PrimaryKey(id, name = "PK_Gardens_Id")
-//}
+
