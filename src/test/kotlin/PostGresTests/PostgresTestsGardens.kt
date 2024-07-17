@@ -46,7 +46,7 @@ class PostgresTestsGardens {
     }
 
     @Test
-    fun `a gardens table is initially empty`() {
+    fun `an empty table returns an empty list`() {
         transaction(testDatabase) {
             assertEquals(GardensTable.all(), emptyList())
         }
