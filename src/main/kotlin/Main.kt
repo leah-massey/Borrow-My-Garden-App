@@ -1,5 +1,6 @@
 package com.example
 
+import com.example.Adapters.GardensPostgresRepo
 import com.example.Ports.GardensRepo
 import com.example.formats.JacksonMessage
 import com.example.formats.jacksonMessageLens
@@ -14,6 +15,7 @@ import org.http4k.routing.bind
 import org.http4k.routing.routes
 import org.http4k.server.SunHttp
 import org.http4k.server.asServer
+import org.postgresql.ds.PGSimpleDataSource
 
 val app: HttpHandler = routes(
     "/ping" bind GET to {
@@ -26,7 +28,10 @@ val app: HttpHandler = routes(
 )
 
 fun main() {
-    val gardensRepo: GardensRepo = TODO()
+    val gardensRepo: GardensRepo = GardensPostgresRepo(PGSimpleDataSource().apply {
+        user = "postgres"
+        databaseName = "borrowmygarden"
+    })
     val printingApp: HttpHandler = PrintRequest().then(app)
 
     val server = printingApp.asServer(SunHttp(9000)).start()
