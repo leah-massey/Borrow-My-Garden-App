@@ -1,6 +1,5 @@
 package domain
 
-import com.example.Adapters.GardensFileRepo
 import com.example.Ports.GardensRepo
 import com.example.domain.ReadDomain
 import com.example.domain.models.Garden
@@ -20,7 +19,7 @@ class ReadDomainTest {
 
 
         val mockGardenRepo: GardensRepo = mock(GardensRepo::class.java)
-        `when` (mockGardenRepo.getGardens()).thenReturn(testGardens)
+        `when` (mockGardenRepo.getAllGardens()).thenReturn(testGardens)
 
         val undertest = ReadDomain(mockGardenRepo)
 

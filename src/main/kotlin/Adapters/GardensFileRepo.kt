@@ -8,8 +8,12 @@ class GardensFileRepo(filePath: String): GardensRepo {
 
     val gardensFileRepo = File(filePath)
 
-    override fun getGardens(): List<Garden> {
+    override fun getAllGardens(): List<Garden> {
 
+        TODO("Not yet implemented")
+    }
+
+    override fun add() {
         TODO("Not yet implemented")
     }
 }
