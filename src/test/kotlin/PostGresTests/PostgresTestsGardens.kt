@@ -1,7 +1,9 @@
 package com.example.PostGresTests
 
-import com.example.Adapters.all
+
 import com.example.database.GardensTable
+import com.example.database.all
+import com.example.database.insert
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
 import org.jetbrains.exposed.sql.*
@@ -53,17 +55,7 @@ class PostgresTestsGardens {
     }
 }
 
-fun GardensTable.insert(garden: Garden) {
-    insert {
-        it[id] = garden.id
-        it[created_timestamp] = garden.createdTimestamp
-        it[title] = garden.title
-        it[description] = garden.description
-        it[garden_owner_first_name] = garden.gardenOwnerFirstName
-        it[garden_owner_id] = garden.gardenOwnerId
-        it[garden_status] = garden.gardenStatus
-    }
-}
+
 
 
 
