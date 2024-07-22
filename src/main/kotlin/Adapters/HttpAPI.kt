@@ -14,7 +14,7 @@ class HttpAPI(readDomain: ReadDomain) {
 
     val app: HttpHandler = routes(
 
-        "/gardens" bind Method.GET to { request: Request ->
+        "/api/gardens" bind Method.GET to { request: Request ->
             val gardens: List<Garden> = readDomain.viewGardens()
             val gardensAsJsonString: String = mapper.writeValueAsString(gardens)
 
