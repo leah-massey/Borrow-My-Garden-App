@@ -49,7 +49,7 @@ class PostgresTestsGardens {
     fun `a garden profile can retrieved from the database`() {
 
         transaction(gardensPostgresTestRepo.database) {
-            GardensTable.insert(garden1)
+            GardensTable.insert(listOf(garden1))
             val readGardens: List<Garden> = GardensTable.all()
             assertEquals(readGardens, listOf(garden1))
         }
@@ -66,11 +66,7 @@ class PostgresTestsGardens {
     fun `a single garden can be retrieved from the database`() {
 
         transaction(gardensPostgresTestRepo.database) {
-            GardensTable.insert(garden1)
-            GardensTable.insert(garden2)
-            GardensTable.insert(garden3)
-            GardensTable.insert(garden4)
-
+            GardensTable.insert(listOf(garden1, garden2, garden3, garden4))
             assertEquals(gardensPostgresTestRepo.getGarden(garden1.id), garden1)
         }
     }

@@ -41,14 +41,16 @@ fun ResultRow.toGarden(): Garden {
     )
 }
 
-fun GardensTable.insert(garden: Garden) {
-    insert {
-        it[id] = garden.id
-        it[created_timestamp] = garden.createdTimestamp
-        it[title] = garden.title
-        it[description] = garden.description
-        it[garden_owner_first_name] = garden.gardenOwnerFirstName
-        it[garden_owner_id] = garden.gardenOwnerId
-        it[garden_status] = garden.gardenStatus
+fun GardensTable.insert(gardens: List<Garden>) {
+    gardens.map { garden ->
+        insert {
+            it[id] = garden.id
+            it[created_timestamp] = garden.createdTimestamp
+            it[title] = garden.title
+            it[description] = garden.description
+            it[garden_owner_first_name] = garden.gardenOwnerFirstName
+            it[garden_owner_id] = garden.gardenOwnerId
+            it[garden_status] = garden.gardenStatus
+        }
     }
 }
