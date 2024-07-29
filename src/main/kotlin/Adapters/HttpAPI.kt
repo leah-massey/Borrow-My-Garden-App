@@ -18,7 +18,7 @@ val app: HttpHandler = routes(
             Response(Status.OK)
                 .body(gardensAsJsonString)
                 .header("content-type", "application/json")
-                .header("Access-Control-Allow-Origin", "http://localhost:3000")
+                .header("Access-Control-Allow-Origin", "http://localhost:5173")
         },
 
         "/ping" bind Method.GET to {

@@ -1,7 +1,7 @@
 ## - API Docs:
 Below are example request/response scenarios for all endpoints created for this project.
 
-### Get all todos:
+### Get all gardens:
 
 ```GET /gardens```
 
@@ -24,9 +24,11 @@ Response:
     "description": "Perfect for sunflowers",
     "gardenOwnerFirstName": "Alice",
     "gardenOwnerId": "fa3a9c6d-9d2d-4a3c-ae97-4a763d5c9b08",
-    "gardenStatus": "AVAILABLE"
+    "gardenStatus": "NOT_AVAILABLE"
 }
 
 ```
+
+
 
 --------------
