@@ -27,7 +27,7 @@ class ReadDomainTest {
         val underTest = ReadDomain(mockGardenRepo)
 
         // when
-        val actual = underTest.viewGardens(null)
+        val actual = underTest.viewAllGardens(null)
 
         // then
         val expected = testGardens
@@ -42,7 +42,7 @@ class ReadDomainTest {
         val underTest = ReadDomain(mockGardenRepo)
 
         // when
-        val actual = underTest.viewGardens(null)
+        val actual = underTest.viewAllGardens(null)
 
         // then
         val expected = listOf(testGarden1, testGarden2)

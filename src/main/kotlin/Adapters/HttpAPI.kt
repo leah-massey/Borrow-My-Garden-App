@@ -17,7 +17,7 @@ val app: HttpHandler = routes(
             var gardensAsJsonString: String = ""
 
             if (gardenStatus == null) {
-                val gardens: List<Garden> = readDomain.viewGardens(null)
+                val gardens: List<Garden> = readDomain.viewAllGardens(null)
                 gardensAsJsonString = mapper.writeValueAsString(gardens)
                 // default is to only return the available gardens
                 //todo
