@@ -49,4 +49,19 @@ class ReadDomainTest {
 
         assertEquals(expected, actual)
     }
+
+    @Test
+    fun `a single garden is returned`() {
+        // given
+        val testGardens: List<Garden> = listOf(testGarden1, testGarden2, testGarden3, testGarden4)
+        `when` (mockGardenRepo.getGarden(testGarden3.id)).thenReturn(testGarden3)
+        val underTest = ReadDomain(mockGardenRepo)
+
+        // when
+        val actual: Garden = underTest.viewGarden(testGarden3.id)
+
+        // then
+        val expected = testGarden3
+        assertEquals(expected, actual)
+    }
 }
