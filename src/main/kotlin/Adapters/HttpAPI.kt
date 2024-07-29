@@ -12,8 +12,20 @@ class HttpAPI(readDomain: ReadDomain) {
 val app: HttpHandler = routes(
 
         "/api/gardens" bind Method.GET to { request: Request ->
-            val gardens: List<Garden> = readDomain.viewGardens()
-            val gardensAsJsonString: String = mapper.writeValueAsString(gardens)
+            val gardenStatus: String? = request.query("gardenStatus")
+//            val gardens: List<Garden> = readDomain.viewGardens()
+            var gardensAsJsonString: String = ""
+
+            if (gardenStatus == null) {
+                val gardens: List<Garden> = readDomain.viewGardens(null)
+                gardensAsJsonString = mapper.writeValueAsString(gardens)
+                // default is to only return the available gardens
+                //todo
+            } else if (gardenStatus == "ALL") {
+                //todo
+            } else if (gardenStatus == "NOT_AVAILABLE") {
+                //todo
+            }
 
             Response(Status.OK)
                 .body(gardensAsJsonString)
