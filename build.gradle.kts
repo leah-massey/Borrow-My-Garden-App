@@ -22,6 +22,7 @@ val http4kConnectVersion: String by project
 val junitVersion: String by project
 val kotlinVersion: String by project
 val exposedVersion: String by project
+val mockkVersion: String by project
 
 application {
     mainClass = "com.example.BorrowMyGardenMainKt"
@@ -67,6 +68,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-test-junit5")
 
 
+
 //    implementation("org.jetbrains.kotlinx:dataframe:0.13.1")
     testImplementation("org.http4k:http4k-testing-approval:${http4kVersion}")
     testImplementation("org.http4k:http4k-testing-hamkrest:${http4kVersion}")
@@ -74,5 +76,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.2")
     testImplementation("org.mockito:mockito-core:3.+")
+    testImplementation("io.mockk:mockk:${mockkVersion}")
 
 }
