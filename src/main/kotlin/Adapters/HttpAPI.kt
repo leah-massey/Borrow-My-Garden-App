@@ -6,6 +6,7 @@ import org.http4k.core.*
 import org.http4k.format.Jackson.mapper
 import org.http4k.routing.bind
 import org.http4k.routing.routes
+import java.util.*
 
 class HttpAPI(readDomain: ReadDomain) {
 
@@ -32,6 +33,18 @@ val app: HttpHandler = routes(
                 .header("content-type", "application/json")
                 .header("Access-Control-Allow-Origin", "http://localhost:5173")
         },
+
+    "api/garden" bind Method.GET to {request: Request ->
+        val gardenIdAsString: String = request.query("gardenId") ?: throw IllegalArgumentException("must provide a garden ID")
+        val gardenId: UUID = UUID.fromString(gardenIdAsString)
+        val garden: Garden = readDomain.viewGarden(gardenId)
+        val gardenAsJsonString: String = mapper.writeValueAsString(garden)
+
+        Response(Status.OK)
+            .body(gardenAsJsonString)
+            .header("content-type", "application/json")
+            .header("Access-Control-Allow-Origin", "http://localhost:5173/garden")
+    },
 
         "/ping" bind Method.GET to {
             Response(Status.OK).body("pong")
