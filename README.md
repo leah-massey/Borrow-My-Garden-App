@@ -44,6 +44,15 @@ Typically there would be two users on this platform:
 ```
 
 ## Getting started 
+
+To run this app you will need to first start the backend server and then the frontend server, in separate terminals. 
+
+Backend server:  navigate to `Main.kt` and click the green arrow to the left of the Main function. You should see in the run tab the message Server started on 9000
+
+Frontend server: navigate to the client directory and run `pnpm dev` from the terminal. You will see the following link appear: Local:   http://localhost:5173/
+follow the link to see the app in your browser.
+
+
 to run the docker container:
 docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
 
