@@ -1,7 +1,5 @@
-
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import {Component} from "react";
-
 
 interface Garden {
   id: string;
@@ -13,54 +11,45 @@ interface Garden {
   gardenOwnerId: string;
 }
 
-interface AppState {
-  isLoading: boolean;
-  gardens: Garden[];
-}
+const App: React.FC = () => {
+  const [gardens, setGardens] = useState<Garden[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-class App extends Component<{ }, AppState> {
-  state: AppState = {
-    isLoading: true,
-    gardens: []
-  }
-
-  async componentDidMount () {
-    try {
-      console.log("Fetching gardens...");
-    const response = await fetch('http://localhost:9000/api/gardens');
-    const body = await response.json();
-      console.log("API response:", body);
-    this.setState({gardens: body, isLoading: false});
-      console.log("State after fetching:", this.state);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error('Error fetching gardens:', error.message);
-      } else {
-      console.error('Error fetching gardens:', error);
+  useEffect(() => {
+    const fetchGardens = async () => {
+      try {
+        const response = await fetch('http://localhost:9000/api/gardens');
+        const body = await response.json();
+        setGardens(body); // Set gardens in state
+        setIsLoading(false); // Set loading to false after fetching data
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error('Error fetching gardens:', error.message);
+        } else {
+          console.error('Error fetching gardens:', error);
+        }
       }
-    }
+    };
+
+    fetchGardens(); // Fetch gardens on component mount
+  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
+
+  if (isLoading) {
+    return <p>Loading...</p>;
   }
 
-  render() {
-    const {gardens, isLoading} = this.state;
-    console.log("Rendering component. isLoading:", isLoading, "gardens:", gardens);
-
-    if (isLoading) {
-      return <p>Loading...</p>;
-    }
-    return (
-        <div className="App">
-          <header className="App-header">
-            <h2>Garden List</h2>
-            {gardens.map(garden =>
-                <div key={garden.id}>
-                  {garden.title}
-                </div>
-            )}
-          </header>
-        </div>
-    );
-}
-}
+  return (
+      <div className="App">
+        <header className="App-header">
+          <h2>Garden List</h2>
+          {gardens.map(garden => (
+              <div key={garden.id}>
+                {garden.title}
+              </div>
+          ))}
+        </header>
+      </div>
+  );
+};
 
 export default App;
