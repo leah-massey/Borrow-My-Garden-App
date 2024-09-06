@@ -20,7 +20,7 @@ function App() {
     useEffect(() => {
         const fetchGardens = async () => {
             try {
-                const response = await fetch('http://localhost:9000/gardens');
+                const response = await fetch('http://localhost:9000/internal/gardens');
                 const body = await response.json();
                 setGardens(body);
             }
@@ -34,7 +34,7 @@ function App() {
         }
 
         fetchGardens()
-    })
+    }, [])
 
 
 

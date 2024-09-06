@@ -14,7 +14,7 @@ class HttpAPI(readDomain: ReadDomain) {
 
     val app: HttpHandler = routes(
 
-        "/gardens" bind Method.GET to { request: Request ->
+        "internal/gardens" bind Method.GET to { request: Request ->
             val gardens: List<Garden> = readDomain.viewGardens()
             val gardensAsJsonString: String = mapper.writeValueAsString(gardens)
 
@@ -23,12 +23,6 @@ class HttpAPI(readDomain: ReadDomain) {
                 .header("content-type", "application/json")
                 .header("Access-Control-Allow-Origin", "http://localhost:5173")
         },
-
-
-        "/ping" bind Method.GET to {
-            Response(Status.OK).body("pong")
-        }
-
 
     )
     private val mapper: ObjectMapper = jacksonObjectMapper()
