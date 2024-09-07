@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from "react-router-dom";
+import GardenPage from "../garden/GardenPage.tsx";
+import GardenList from "../../components/GardenList.tsx";
 
 export interface Garden {
     id: string;
@@ -39,13 +41,7 @@ const GardensPage = () => {
         <>
             <div>
                 <h1>Gardens List</h1>
-                {gardens.map(garden => (
-                    <div key = {garden.id}>
-                        <Link to={garden.id}>
-                            {garden.title}
-                        </Link>
-                    </div>
-                ))}
+                <GardenList gardens={gardens}/>
             </div>
         </>
     )
