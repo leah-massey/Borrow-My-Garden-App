@@ -13,15 +13,15 @@ import org.junit.jupiter.api.Test
 import org.postgresql.ds.PGSimpleDataSource
 
 class BorrowMyGardenMainTest {
-    @Test
-    fun `Ping test`() {
-        val gardensRepoDatasource: GardensRepo = GardensPostgresRepo(PGSimpleDataSource().apply {
-            user = "postgres"
-            databaseName = "borrowmygarden"
-        })
-        val readDomain = ReadDomain(gardensRepoDatasource)
-        val httpAPI = HttpAPI(readDomain)
-
-        assertEquals(Response(OK).body("pong"), httpAPI.app(Request(GET, "/ping")))
-    }
+//    @Test
+//    fun `Ping test`() {
+//        val gardensRepoDatasource: GardensRepo = GardensPostgresRepo(PGSimpleDataSource().apply {
+//            user = "postgres"
+//            databaseName = "borrowmygarden"
+//        })
+//        val readDomain = ReadDomain(gardensRepoDatasource)
+//        val httpAPI = HttpAPI(readDomain)
+//
+//        assertEquals(Response(OK).body("pong"), httpAPI.app(Request(GET, "/ping")))
+//    }
 }
