@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
+import {Link} from "react-router-dom";
 
-interface Garden {
+export interface Garden {
     id: string;
     createdTimestamp: string;
     title: string;
@@ -40,7 +41,9 @@ const GardensPage = () => {
                 <h1>Gardens List</h1>
                 {gardens.map(garden => (
                     <div key = {garden.id}>
-                        {garden.title}
+                        <Link to={garden.id}>
+                            {garden.title}
+                        </Link>
                     </div>
                 ))}
             </div>
