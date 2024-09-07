@@ -1,55 +1,27 @@
-import {useEffect, useState} from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
-
-interface Garden {
-    id: string;
-    createdTimestamp: string;
-    title: string;
-    description: string;
-    gardenOwnerFirstName: string;
-    gardenStatus: string;
-    gardenOwnerId: string;
-}
-
-
-function App() {
-    const [gardens, setGardens] = useState<Garden[]>([])
-
-    useEffect(() => {
-        const fetchGardens = async () => {
-            try {
-                const response = await fetch('http://localhost:9000/internal/gardens');
-                const body = await response.json();
-                setGardens(body);
-            }
-            catch (error: unknown) {
-                if (error instanceof Error) {
-                    console.error("error fetching gardens", error.message)
-                } else {
-                    console.error('Error fetching gardens:', error)
-                }
-            }
-        }
-
-        fetchGardens()
-    }, [])
+import GardensPage from "./pages/gardens/GardensPage.tsx";
+import {BrowserRouter, Route, Router, Routes} from "react-router-dom";
+import Layout from "./components/Layout.tsx";
 
 
 
-  return (
-    <>
-      <div>
-      <h1>Gardens List</h1>
-          {gardens.map(garden => (
-              <div key = {garden.id}>
-                  {garden.title}
-              </div>
-          ))}
-      </div>
-    </>
-  )
+
+const App = () => {
+
+    return (
+
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<GardensPage />}/>
+                </Route>
+            </Routes>
+        </BrowserRouter>
+
+
+    )
+
 }
 
 export default App
