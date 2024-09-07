@@ -1,13 +1,13 @@
 import {expect, test} from "@playwright/test";
 
 test('has title', async({ page}) => {
-    await page.goto('http://localhost:5173/')
+    await page.goto('http://localhost:5173/gardens')
 
     await expect(page).toHaveTitle(/Gardens/)
 })
 
 test('individual garden link', async ({ page}) => {
-    await page.goto('http://localhost:5173/');
+    await page.goto('http://localhost:5173/gardens');
 
     await page.getByRole('link', {name: 'Garden with good soil'}).click();
 
