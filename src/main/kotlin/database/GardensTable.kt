@@ -4,6 +4,7 @@ import com.example.database.insert
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.util.*
 
 
@@ -21,6 +22,10 @@ import java.util.*
 fun GardensTable.all() = selectAll().map {
     it.toGarden()
 }
+
+
+fun GardensTable.findGardenById(gardenId: UUID): List<Garden> = GardensTable.select(GardensTable.id eq gardenId).map { it.toGarden() }
+
 
 fun ResultRow.toGarden(): Garden {
     val id = this[GardensTable.id]

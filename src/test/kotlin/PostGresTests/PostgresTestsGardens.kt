@@ -3,6 +3,7 @@ package com.example.PostGresTests
 
 import com.example.database.GardensTable
 import com.example.database.all
+import com.example.database.findGardenById
 import com.example.database.insert
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
@@ -30,8 +31,8 @@ class PostgresTestsGardens {
         }
     }
     @Test
-    fun `a garden profile can retrieved from the database`() {
-        val garden = Garden(
+    fun `garden profiles can retrieved from the database`() {
+        val garden1 = Garden(
             id = UUID.randomUUID(),
             createdTimestamp = "31081988",
             title = "Garden with good soil",
@@ -40,10 +41,51 @@ class PostgresTestsGardens {
             gardenOwnerId = UUID.randomUUID(),
             gardenStatus = GardenStatus.AVAILABLE
         )
+        val garden2 = Garden(
+            id = UUID.randomUUID(),
+            createdTimestamp = "123",
+            title = "Great Garden",
+            description = "Some details",
+            gardenOwnerFirstName = "Mary",
+            gardenOwnerId = UUID.randomUUID(),
+            gardenStatus = GardenStatus.AVAILABLE
+        )
+
         transaction(testDatabase) {
-            GardensTable.insert(garden)
+            GardensTable.insert(garden1)
+            GardensTable.insert(garden2)
+
             val readGardens: List<Garden> = GardensTable.all()
-            assertEquals(readGardens, listOf(garden))
+            assertEquals(readGardens, listOf(garden1, garden2))
+        }
+    }
+    @Test
+    fun `a single garden profile can retrieved from the database`() {
+        val garden1 = Garden(
+            id = UUID.randomUUID(),
+            createdTimestamp = "31081988",
+            title = "Garden with good soil",
+            description = "Everything grows fast in this garden",
+            gardenOwnerFirstName = "John",
+            gardenOwnerId = UUID.randomUUID(),
+            gardenStatus = GardenStatus.AVAILABLE
+        )
+        val garden2 = Garden(
+            id = UUID.randomUUID(),
+            createdTimestamp = "123",
+            title = "Great Garden",
+            description = "Some details",
+            gardenOwnerFirstName = "Mary",
+            gardenOwnerId = UUID.randomUUID(),
+            gardenStatus = GardenStatus.AVAILABLE
+        )
+
+        transaction(testDatabase) {
+            GardensTable.insert(garden1)
+            GardensTable.insert(garden2)
+
+            val readGardens: List<Garden> = GardensTable.findGardenById(garden2.id)
+            assertEquals(readGardens, listOf(garden2))
         }
     }
 
