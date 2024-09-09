@@ -24,10 +24,10 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain) {
             Response(Status.OK)
                 .body(gardensAsJsonString)
                 .header("content-type", "application/json")
-                .header("Access-Control-Allow-Origin", "http://localhost:5173/gardens")
+                .header("Access-Control-Allow-Origin", "http://localhost:5173")
         },
 
-        "internal/gardens/{gardenId}" bind Method.GET to {request: Request ->
+        "internal/gardens/{gardenId}" bind Method.GET to { request: Request ->
             val gardenId: UUID = UUID.fromString(request.path("gardenId"))
             println("this is gardenId: ${gardenId}")
             val garden: List<Garden> = readDomain.viewGardens(gardenId)
@@ -37,7 +37,7 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain) {
             Response(Status.OK)
                 .body(gardenAsJsonString)
                 .header("content-type", "application/json")
-                .header("Access-Control-Allow-Origin", "*") // this doesn't feel safe but not sure how to manage better
+                .header("Access-Control-Allow-Origin", "http://localhost:5173")
         }
 
     )

@@ -38,7 +38,7 @@ class HttpApiTest {
 
         val expectedResponse = Response(Status.OK)
             .header("content-type", "application/json")
-            .header("Access-Control-Allow-Origin", "*")
+            .header("Access-Control-Allow-Origin", "http://localhost:5173")
             .body(mapper.writeValueAsString(listOf(testGarden)))
 
         val actualResponse = HttpAPI(mockReadDomain).app(Request(Method.GET, "internal/gardens/2df7f21c-eade-4ee0-ab0e-0b9cb5b5c053"))
