@@ -20,7 +20,7 @@ import java.util.*
 
 class HttpApiTest {
     @Test
-    fun `returns a garden`() {
+    fun `a single garden is returned`() {
 
         val testGarden: Garden = (Garden
             (
