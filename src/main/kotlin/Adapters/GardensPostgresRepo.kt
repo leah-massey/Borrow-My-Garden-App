@@ -20,7 +20,7 @@ class GardensPostgresRepo(datasource: PGSimpleDataSource): GardensRepo {
             GardensTable.all()
         }
     }
-    override fun getGarden(gardenId: UUID): List<Garden> {
+    override fun getGarden(gardenId: UUID): Garden {
         return transaction(database) {
             GardensTable.findGardenById(gardenId)
         }

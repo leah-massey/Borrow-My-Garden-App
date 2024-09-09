@@ -35,8 +35,6 @@ const GardensPage = () => {
         fetchGardens()
     }, [])
 
-
-
     return (
         <>
             <div>

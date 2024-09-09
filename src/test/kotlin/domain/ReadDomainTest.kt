@@ -26,7 +26,7 @@ class ReadDomainTest {
 
         val expected = testGardens
 
-        val actual = undertest.viewGardens(null)
+        val actual = undertest.viewGardens()
         assertEquals(expected, actual)
 
     }
@@ -36,13 +36,13 @@ class ReadDomainTest {
         val testGarden2 = Garden(id = UUID.randomUUID(), createdTimestamp = "234", title = "Nice Garden", description = "really nice", gardenOwnerFirstName = "Stan", gardenOwnerId = UUID.randomUUID())
 
         val mockGardenRepo: GardensRepo = mock(GardensRepo::class.java)
-        `when` (mockGardenRepo.getGarden(testGarden2.id)).thenReturn(listOf(testGarden2))
+        `when` (mockGardenRepo.getGarden(testGarden2.id)).thenReturn(testGarden2)
 
         val underTest = ReadDomain(mockGardenRepo)
 
-        val expected = listOf(testGarden2)
+        val expected: Garden = testGarden2
 
-        val actual = underTest.viewGardens(testGarden2.id)
+        val actual = underTest.viewSingleGarden(testGarden2.id)
         assertEquals(expected, actual)
 
     }

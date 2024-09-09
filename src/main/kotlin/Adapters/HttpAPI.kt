@@ -18,7 +18,7 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain) {
 
         "internal/gardens" bind Method.GET to { request: Request ->
             // ask about testing the read domain and also the db
-            val gardens: List<Garden> = readDomain.viewGardens(null)
+            val gardens: List<Garden> = readDomain.viewGardens()
             val gardensAsJsonString: String = mapper.writeValueAsString(gardens)
 
             Response(Status.OK)
@@ -29,7 +29,7 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain) {
 
         "internal/gardens/{gardenId}" bind Method.GET to { request: Request ->
             val gardenId: UUID = UUID.fromString(request.path("gardenId"))
-            val garden: List<Garden> = readDomain.viewGardens(gardenId)
+            val garden: Garden = readDomain.viewSingleGarden(gardenId)
             val gardenAsJsonString: String = mapper.writeValueAsString(garden)
 
             Response(Status.OK)

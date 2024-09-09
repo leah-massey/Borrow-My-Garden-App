@@ -24,7 +24,7 @@ fun GardensTable.all() = selectAll().map {
 }
 
 
-fun GardensTable.findGardenById(gardenId: UUID): List<Garden> = GardensTable.select(GardensTable.id eq gardenId).map { it.toGarden() }
+fun GardensTable.findGardenById(gardenId: UUID): Garden = GardensTable.select(GardensTable.id eq gardenId).map { it.toGarden() }.first()
 
 
 fun ResultRow.toGarden(): Garden {
