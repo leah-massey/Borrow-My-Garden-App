@@ -8,14 +8,10 @@ import kotlin.test.todo
 
 class ReadDomain(val gardensRepo: GardensRepo): ReadDomain {
 
-    override fun viewGardens(gardenId: UUID?): List<Garden> {
-        if (gardenId == null) {
-            return gardensRepo.getAllGardens()
-        }
-        else {
-            return gardensRepo.getGarden(gardenId)
-        }
-
-
+    override fun viewGardens(): List<Garden> {
+        return gardensRepo.getAllGardens()
+    }
+    override fun viewSingleGarden(gardenId: UUID): Garden {
+        return gardensRepo.getGarden(gardenId)
     }
 }

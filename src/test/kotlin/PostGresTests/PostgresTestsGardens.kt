@@ -84,8 +84,8 @@ class PostgresTestsGardens {
             GardensTable.insert(garden1)
             GardensTable.insert(garden2)
 
-            val readGardens: List<Garden> = GardensTable.findGardenById(garden2.id)
-            assertEquals(readGardens, listOf(garden2))
+            val singleGarden: Garden = GardensTable.findGardenById(garden2.id)
+            assertEquals(singleGarden, garden2)
         }
     }
 

@@ -3,15 +3,15 @@ import {Link, useParams} from "react-router-dom";
 import {Garden} from "../pages/gardens/GardensPage.tsx";
 
 const GardenDetails = () => {
-    const {gardenId} = useParams()
-    console.log(`this is the garden id: ${gardenId}`)
-    const [gardenDetails, setGardenDetails] = useState<Garden[]> (null)
+
+    const {gardenId} = useParams<{gardenId: string}>()
+    const [gardenDetails, setGardenDetails] = useState<Garden> ()
 
     useEffect( () => {
         const fetchGardenDetails = async () => {
             try {
                 const response = await fetch('http://localhost:9000/internal/gardens/' + gardenId);
-                const body: Garden[] = await response.json();
+                const body: Garden = await response.json();
                 setGardenDetails(body);
             }
             catch (error: unknown) {
@@ -25,16 +25,17 @@ const GardenDetails = () => {
         fetchGardenDetails()
     }, []);
 
+    if( !gardenDetails ){
+        return <p>Loading...</p>
+    }
+
     return (
             <div className="blog-details">
-                {gardenDetails.map(garden => (
                     <div>
-                        <h3>{garden.title}</h3>
-                        <p>{garden.description}</p>
+                        <h3>{gardenDetails.title}</h3>
+                        <p>{gardenDetails.description}</p>
                     </div>
-                ))}
             </div>
-
     )
 }
 

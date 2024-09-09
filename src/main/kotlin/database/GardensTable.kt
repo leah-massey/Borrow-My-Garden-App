@@ -7,7 +7,6 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.util.*
 
-
     object GardensTable: Table() {
         val id: Column<UUID> = uuid("id")
         val created_timestamp: Column<String> = varchar("createdTimestamp", length = 100)
@@ -23,9 +22,7 @@ fun GardensTable.all() = selectAll().map {
     it.toGarden()
 }
 
-
-fun GardensTable.findGardenById(gardenId: UUID): List<Garden> = GardensTable.select(GardensTable.id eq gardenId).map { it.toGarden() }
-
+fun GardensTable.findGardenById(gardenId: UUID): Garden = GardensTable.select(GardensTable.id eq gardenId).map { it.toGarden() }.first()
 
 fun ResultRow.toGarden(): Garden {
     val id = this[GardensTable.id]

@@ -20,7 +20,7 @@ import java.util.*
 
 class HttpApiTest {
     @Test
-    fun `returns a garden`() {
+    fun `a single garden is returned`() {
 
         val testGarden: Garden = (Garden
             (
@@ -31,15 +31,15 @@ class HttpApiTest {
             gardenOwnerFirstName="Marie",
             gardenOwnerId=UUID.fromString("41287d8b-4549-40e5-aec7-73ae4fd53ef5")
             )
-                )
+        )
 
         val mockReadDomain: ReadDomain = Mockito.mock(ReadDomain::class.java)
-        `when` (mockReadDomain.viewGardens(UUID.fromString("2df7f21c-eade-4ee0-ab0e-0b9cb5b5c053"))).thenReturn(listOf(testGarden))
+        `when` (mockReadDomain.viewSingleGarden(UUID.fromString("2df7f21c-eade-4ee0-ab0e-0b9cb5b5c053"))).thenReturn(testGarden)
 
         val expectedResponse = Response(Status.OK)
             .header("content-type", "application/json")
             .header("Access-Control-Allow-Origin", "http://localhost:5173")
-            .body(mapper.writeValueAsString(listOf(testGarden)))
+            .body(mapper.writeValueAsString(testGarden))
 
         val actualResponse = HttpAPI(mockReadDomain).app(Request(Method.GET, "internal/gardens/2df7f21c-eade-4ee0-ab0e-0b9cb5b5c053"))
 

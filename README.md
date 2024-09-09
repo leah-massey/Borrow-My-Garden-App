@@ -44,6 +44,8 @@ Typically there would be two users on this platform:
 ```
 
 ## Getting started 
+TODO
+
 to run the docker container:
-docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+```docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres```
 
