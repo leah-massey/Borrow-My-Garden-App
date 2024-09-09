@@ -14,6 +14,4 @@ class ReadDomain(val gardensRepo: GardensRepo): ReadDomain {
     override fun viewSingleGarden(gardenId: UUID): Garden {
         return gardensRepo.getGarden(gardenId)
     }
-
-
 }
