@@ -29,9 +29,7 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain) {
 
         "internal/gardens/{gardenId}" bind Method.GET to { request: Request ->
             val gardenId: UUID = UUID.fromString(request.path("gardenId"))
-            println("this is gardenId: ${gardenId}")
             val garden: List<Garden> = readDomain.viewGardens(gardenId)
-            println("this is garden: ${garden}")
             val gardenAsJsonString: String = mapper.writeValueAsString(garden)
 
             Response(Status.OK)
