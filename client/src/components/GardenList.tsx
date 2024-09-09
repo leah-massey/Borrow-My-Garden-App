@@ -8,8 +8,10 @@ const GardenList = (props) => {
         <div className="garden-list">
             {gardens.map(garden => (
                 <div key = {garden.id}>
-                    <Link to={garden.id}>
-                        {garden.title}
+                    <Link to={`/gardens/${garden.id}`}>
+                        <h3>
+                            {garden.title}
+                        </h3>
                     </Link>
                 </div>
             ))}
