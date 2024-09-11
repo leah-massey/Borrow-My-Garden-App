@@ -1,39 +1,20 @@
 import React, {useEffect, useState} from 'react'
 import {Link, useParams} from "react-router-dom";
 import {Garden} from "../pages/gardens/GardensPage.tsx";
+import useFetch from "../hooks/useFetch.tsx";
+import GardenList from "./GardenList.tsx";
 
 const GardenDetails = () => {
-
     const {gardenId} = useParams<{gardenId: string}>()
-    const [gardenDetails, setGardenDetails] = useState<Garden> ()
-
-    useEffect( () => {
-        const fetchGardenDetails = async () => {
-            try {
-                const response = await fetch('http://localhost:9000/internal/gardens/' + gardenId);
-                const body: Garden = await response.json();
-                setGardenDetails(body);
-            }
-            catch (error: unknown) {
-                if (error instanceof Error) {
-                    console.error(`error fetching garden ${gardenId}`, error.message)
-                } else {
-                    console.error(`Error fetching garden ${gardenId}:`, error)
-                }
-            }
-        }
-        fetchGardenDetails()
-    }, []);
-
-    if( !gardenDetails ){
-        return <p>Loading...</p>
-    }
+    const {data, isPending, error} = useFetch<Garden>('http://localhost:9000/internal/gardens/' + gardenId)
 
     return (
-            <div className="blog-details">
+            <div className="garden-details">
                     <div>
-                        <h3>{gardenDetails.title}</h3>
-                        <p>{gardenDetails.description}</p>
+                        {error && <div>{error}</div>}
+                        {isPending && <div>Loading...</div>}
+                        {data && <h3>{data?.title}</h3>}
+                        {data &&  <p>{data?.description}</p>}
                     </div>
             </div>
     )

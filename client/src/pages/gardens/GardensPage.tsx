@@ -13,10 +13,10 @@ export interface Garden {
 }
 
 const GardensPage = () => {
-    const {data, isPending, error} = useFetch('http://localhost:9000/internal/gardens')
+    const {data, isPending, error} = useFetch<Garden[]>('http://localhost:9000/internal/gardens')
 
     return (
-            <div className="gardenList">
+            <div className="garden-list">
                 <h1>Gardens List</h1>
                 {error && <div>{error}</div>}
                 {isPending && <div>Loading...</div>}

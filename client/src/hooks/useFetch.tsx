@@ -1,49 +1,29 @@
 import {useEffect, useState} from "react";
-import {Garden} from "../pages/gardens/GardensPage.tsx";
 
-function useFetch(url) {
+    function useFetch<T>(url: string) {
+        const [data, setData] = useState<T | null>(null);  // Supports both single objects and lists
+        const [isPending, setIsPending] = useState(true);
+        const [error, setError] = useState<string | null>(null);
 
-    const [data, setData] = useState([])
-    const [isPending, setIsPending] = useState(true)
-    const [error, setError] = useState(null)
-
-    useEffect(() => {
-        // const fetchGardens = async () => {
-        //     try {
-        //         const response = await fetch('http://localhost:9000/internal/gardens');
-        //         const body = await response.json();
-        //         setGardens(body);
-        //     }
-        //     catch (error: unknown) {
-        //         if (error instanceof Error) {
-        //             console.error("error fetching gardens", error.message)
-        //         } else {
-        //             console.error('Error fetching gardens:', error)
-        //         }
-        //     }
-        // }
-        //
-        // fetchGardens()
-        setTimeout(() => {
-            fetch(url)
-                .then(response => {
-                    if(!response.ok) {
-                        throw Error('could not fetch the data for that resource');
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch: ${response.statusText}`);
                     }
-                    return response.json()
-                })
-                .then(returnedData => {
-                    setData(returnedData)
-                    setIsPending(false)
-                })
-                .catch(err => {
-                    setIsPending(false)
-                    setError(err.message)
-                })
-        }, 1000)
-    }, [])
+                    const result: T = await response.json();  // Infer the type based on how the hook is used
+                    setData(result);
+                    setIsPending(false);
+                } catch (err) {
+                    setError((err as Error).message);
+                    setIsPending(false);
+                }
+            };
+            fetchData();
+        }, [url]);
 
-    return {data, isPending, error}
-}
+        return { data, isPending, error };
+    }
+export default useFetch
 
-export default useFetch;
