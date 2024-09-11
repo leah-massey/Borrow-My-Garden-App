@@ -1,8 +1,10 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import {Garden} from "../pages/gardens/GardensPage.tsx";
 
 const GardenList = (props) => {
-    const gardens = props.gardens
+
+    const gardens: Garden[] = props.gardens
 
     return (
         <div className="garden-list">
