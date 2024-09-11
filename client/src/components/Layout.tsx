@@ -1,10 +1,13 @@
 import React from 'react'
-import {Outlet} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 
 const Layout = () => {
     return (
         <>
-        <div>This is will be the browser tab (Layout)</div>
+            <ul className='horizontal-list'>
+                <li><Link to='/add-garden'>Add a garden</Link></li>
+                <li><p>This is will be the browser tab (Layout)</p></li>
+            </ul>
         <Outlet />
         </>
     )

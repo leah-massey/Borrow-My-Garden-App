@@ -5,6 +5,7 @@ import {BrowserRouter, Route, Router, Routes} from "react-router-dom";
 import Layout from "./components/Layout.tsx";
 import HomePage from "./pages/homePage/HomePage.tsx";
 import GardenDetails from "./components/GardenDetails.tsx";
+import AddGardenForm from "./components/AddGardenForm.tsx";
 
 
 
@@ -19,6 +20,7 @@ const App = () => {
                     <Route index element={<HomePage />}/>
                     <Route path={"gardens"} element={<GardensPage />}/>
                     <Route path={"gardens/:gardenId"} element={<GardenDetails />} />
+                    <Route path={"add-garden"} element={<AddGardenForm />} />
                 </Route>
             </Routes>
         </BrowserRouter>
