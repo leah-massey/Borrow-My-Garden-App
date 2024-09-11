@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import {Link} from "react-router-dom";
-import GardenPage from "../garden/GardenPage.tsx";
 import GardenList from "../../components/GardenList.tsx";
+import useFetch from "../../hooks/useFetch.tsx";
 
 export interface Garden {
     id: string;
@@ -14,35 +13,16 @@ export interface Garden {
 }
 
 const GardensPage = () => {
-    const [gardens, setGardens] = useState<Garden[]>([])
-
-    useEffect(() => {
-        const fetchGardens = async () => {
-            try {
-                const response = await fetch('http://localhost:9000/internal/gardens');
-                const body = await response.json();
-                setGardens(body);
-            }
-            catch (error: unknown) {
-                if (error instanceof Error) {
-                    console.error("error fetching gardens", error.message)
-                } else {
-                    console.error('Error fetching gardens:', error)
-                }
-            }
-        }
-
-        fetchGardens()
-    }, [])
+    const {data, isPending, error} = useFetch('http://localhost:9000/internal/gardens')
 
     return (
-        <>
-            <div>
+            <div className="gardenList">
                 <h1>Gardens List</h1>
-                <GardenList gardens={gardens}/>
+                {error && <div>{error}</div>}
+                {isPending && <div>Loading...</div>}
+                {data && <GardenList gardens={data}/>}
             </div>
-        </>
-    )
+    );
 }
 
 export default GardensPage
