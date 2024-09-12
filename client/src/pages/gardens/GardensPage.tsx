@@ -16,11 +16,13 @@ const GardensPage = () => {
     const {data, isPending, error} = useFetch<Garden[]>('http://localhost:9000/internal/gardens')
 
     return (
-            <div className="garden-list">
-                <h1>Gardens List</h1>
+            <div className="garden-list flex items-center justify-center mt-20 ">
+                <section className=" bg-white  p-10 rounded-lg shadow-lg w-2/5">
+                <h1 className="font-bold text-2xl">Gardens List</h1>
                 {error && <div>{error}</div>}
                 {isPending && <div>Loading...</div>}
                 {data && <GardenList gardens={data}/>}
+                </section>
             </div>
     );
 }

@@ -13,7 +13,7 @@ import AddGardenForm from "./components/AddGardenForm.tsx";
 const App = () => {
 
     return (
-
+<div className="bg-lime-100 min-h-screen w-full">
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Layout />}>
@@ -24,7 +24,7 @@ const App = () => {
                 </Route>
             </Routes>
         </BrowserRouter>
-
+</div>
 
     )
 

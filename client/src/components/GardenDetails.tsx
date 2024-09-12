@@ -9,11 +9,11 @@ const GardenDetails = () => {
     const {data, isPending, error} = useFetch<Garden>('http://localhost:9000/internal/gardens/' + gardenId)
 
     return (
-            <div className="garden-details">
-                    <div>
+            <div className="garden-details garden-list flex items-center justify-center mt-20">
+                    <div className="bg-white  p-10 rounded-lg shadow-lg w-2/5">
                         {error && <div>{error}</div>}
                         {isPending && <div>Loading...</div>}
-                        {data && <h3>{data?.title}</h3>}
+                        {data && <h3 className="font-bold text-2xl mb-4">{data?.title}</h3>}
                         {data &&  <p>{data?.description}</p>}
                     </div>
             </div>
