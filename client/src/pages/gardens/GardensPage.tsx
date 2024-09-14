@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import GardenList from "../../components/GardenList.tsx";
 import useFetch from "../../hooks/useFetch.tsx";
+import {UUID} from "node:crypto";
 
 export interface Garden {
     id: string;
@@ -9,7 +10,7 @@ export interface Garden {
     description: string;
     gardenOwnerFirstName: string;
     gardenStatus: string;
-    gardenOwnerId: string;
+    gardenOwnerId: UUID;
 }
 
 const GardensPage = () => {
