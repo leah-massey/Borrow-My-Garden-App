@@ -1,45 +1,58 @@
 import {useEffect, useState} from "react";
 import {v4 as uuidv4} from 'uuid'
 import {randomUUID} from "node:crypto";
+import {Garden} from "../pages/gardens/GardensPage.tsx";
 
 const AddGardenForm = () => {
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
-    const [gardenOwnerFirstName, setGardenOwnerFirstName] = useState("")
-    const [gardenOwnerId, setGardenOwnerId] = useState<string | undefined>(undefined)
     const [gardenId, setGardenId] = useState<string | undefined>(undefined)
     const[createdTimestamp, setCreatedTimestamp] = useState("")
+    const[formPayload, setFormPayload] = useState<{ [p: string]: string | File }>({})
 
-    const submitForm = (e) => {
-        e.preventDefault()
 
-    }
+
 
     const handleSubmit = (e) => {
-        submitForm(e)
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const payload = Object.fromEntries(formData)
+
         setGardenId(uuidv4())
         setCreatedTimestamp(new Date().toISOString())
+        setFormPayload(payload) // why is this flagged as a problem? I think it works?
+
+
     }
 
     useEffect(() => {
+
         if (gardenId && createdTimestamp) {
-            console.log({
-                title,
-                description,
-                gardenOwnerFirstName,
-                gardenOwnerId,
-                gardenId,
-                createdTimestamp,
-            });
+            // here combine all details and process as part of
+            const garden = {
+                id: gardenId,
+                title: formPayload.title,
+                description: formPayload.description,
+                gardenOwnerFirstName: formPayload.gardenOwnerFirstName,
+                gardenStatus: formPayload.status,
+                createdTimestamp: createdTimestamp,
+                gardenOwnerId: formPayload.gardenOwnerId,
+            }
+
+            fetch('http://localhost:9000/internal/gardens)', {
+                method: 'POST',
+                headers: {"Content-Type": "application/json" },
+                body: JSON.stringify(garden)
+            }).then(() => {
+                console.log("your garden has been added :-)")
+            })
+            // console.log(garden)
         }
     }, [gardenId, createdTimestamp]);
-
 
     return (
         <div className="flex  items-center justify-center h-screen mt-28">
             <section className="bg-white  p-10 rounded-lg shadow-lg w-2/5">
                 <h2 className="font-bold text-2xl mb-4">Add a Garden</h2>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="space-y-12">
                         <div className="border-b border-gray-900/10 pb-12">
                             <p className="flex text-sm mt-4">
@@ -56,7 +69,7 @@ const AddGardenForm = () => {
                                     <span
                                         className="flex select-none items-center pl-3 text-gray-500 sm:text-sm"></span>
                                             <input
-                                                onChange={(e) => {setTitle(e.target.value)}}
+                                                // onChange={(e) => {setTitle(e.target.value)}}
                                                 id="title"
                                                 name="title"
                                                 type="text"
@@ -72,7 +85,7 @@ const AddGardenForm = () => {
                                     </label>
                                     <div className="mt-2">
                                         <textarea
-                                            onChange={(e) => {setDescription(e.target.value)}}
+                                            // onChange={(e) => {setDescription(e.target.value)}}
                                             id="description"
                                             name="description"
                                             rows={4}
@@ -85,7 +98,7 @@ const AddGardenForm = () => {
                         </div>
 
                         <div className="sm:col-span-4">
-                            <label htmlFor="first-name" className="block font-bold mb-2">
+                            <label htmlFor="garden-owner-first-name" className="block font-bold mb-2">
                                 Your First Name
                             </label>
                             <div className="mt-2">
@@ -94,9 +107,9 @@ const AddGardenForm = () => {
                                     <span
                                         className="flex select-none items-center pl-3 text-gray-500 sm:text-sm"></span>
                                     <input
-                                        onChange={(e) => {setGardenOwnerFirstName(e.target.value)}}
-                                        id="first-name"
-                                        name="first-name"
+                                        // onChange={(e) => {setGardenOwnerFirstName(e.target.value)}}
+                                        id="garden-owner-first-name"
+                                        name="gardenOwnerFirstName"
                                         type="text"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
                                     />
@@ -105,7 +118,7 @@ const AddGardenForm = () => {
                         </div>
 
                         <div className="sm:col-span-4">
-                            <label htmlFor="userId" className="block font-bold mb-2">
+                            <label htmlFor="garden-owner-id" className="block font-bold mb-2">
                                 Your User Id
                             </label>
                             <div className="mt-2">
@@ -114,9 +127,9 @@ const AddGardenForm = () => {
                                     <span
                                         className="flex select-none items-center pl-3 text-gray-500 sm:text-sm"></span>
                                     <input
-                                        onChange={(e) => {setGardenOwnerId(e.target.value)}}
-                                        id="user-id"
-                                        name="user-id"
+                                        // onChange={(e) => {setGardenOwnerId(e.target.value)}}
+                                        id="garden-owner-id"
+                                        name="gardenOwnerId"
                                         type="text"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
                                     />
@@ -126,7 +139,7 @@ const AddGardenForm = () => {
 
 
                         <div className="sm:col-span-3">
-                            <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
+                            <label htmlFor="status" className="block text-sm font-medium leading-6 text-gray-900">
                                 Garden Status
                             </label>
                             <div className="mt-2">
@@ -145,8 +158,9 @@ const AddGardenForm = () => {
                     </div>
 
                     <div className="mt-6 flex items-center justify-center gap-x-6">
-                        <button onClick={handleSubmit}
-                                type="button"
+                        <button
+                            // onClick={handleSubmit}
+                                type="submit"
                                 className="text-sm font-semibold leading-6 text-gray-900 bg-gray-400 rounded-md p-2 md-2">
                             Submit
                         </button>
