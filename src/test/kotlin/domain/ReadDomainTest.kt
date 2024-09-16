@@ -20,7 +20,7 @@ class ReadDomainTest {
 
 
         val mockGardenRepo: GardensRepo = mock(GardensRepo::class.java)
-        `when` (mockGardenRepo.getAllGardens()).thenReturn(testGardens)
+        `when` (mockGardenRepo.getAll()).thenReturn(testGardens)
 
         val undertest = ReadDomain(mockGardenRepo)
 
@@ -36,7 +36,7 @@ class ReadDomainTest {
         val testGarden2 = Garden(id = UUID.randomUUID(), createdTimestamp = "234", title = "Nice Garden", description = "really nice", gardenOwnerFirstName = "Stan", gardenOwnerId = UUID.randomUUID())
 
         val mockGardenRepo: GardensRepo = mock(GardensRepo::class.java)
-        `when` (mockGardenRepo.getGarden(testGarden2.id)).thenReturn(testGarden2)
+        `when` (mockGardenRepo.get(testGarden2.id)).thenReturn(testGarden2)
 
         val underTest = ReadDomain(mockGardenRepo)
 
