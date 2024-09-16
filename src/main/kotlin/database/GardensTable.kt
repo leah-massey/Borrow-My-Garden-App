@@ -1,6 +1,5 @@
 package com.example.database
 
-import com.example.database.insert
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
 import org.jetbrains.exposed.sql.*
@@ -23,6 +22,8 @@ fun GardensTable.all() = selectAll().map {
 }
 
 fun GardensTable.findGardenById(gardenId: UUID): Garden = GardensTable.select(GardensTable.id eq gardenId).map { it.toGarden() }.first()
+
+fun GardensTable.addGardenToDB(garden: Garden) = GardensTable.insert(garden)
 
 fun ResultRow.toGarden(): Garden {
     val id = this[GardensTable.id]
