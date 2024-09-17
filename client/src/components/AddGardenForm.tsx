@@ -8,25 +8,20 @@ const AddGardenForm = () => {
     const[createdTimestamp, setCreatedTimestamp] = useState("")
     const[formPayload, setFormPayload] = useState<{ [p: string]: string | File }>({})
 
-
-
-
     const handleSubmit = (e) => {
         e.preventDefault()
         const formData = new FormData(e.target)
-        const payload = Object.fromEntries(formData)
+        const payload = Object.fromEntries(formData) as { [p: string]: string | File }
 
         setGardenId(uuidv4())
         setCreatedTimestamp(new Date().toISOString())
         setFormPayload(payload) // why is this flagged as a problem? I think it works?
-
-
     }
 
     useEffect(() => {
 
         if (gardenId && createdTimestamp) {
-            // here combine all details and process as part of
+            // combine all details
             const garden = {
                 id: gardenId,
                 title: formPayload.title,
@@ -36,17 +31,20 @@ const AddGardenForm = () => {
                 createdTimestamp: createdTimestamp,
                 gardenOwnerId: formPayload.gardenOwnerId,
             }
-
-            fetch('http://localhost:9000/internal/gardens)', {
+            fetch('http://localhost:9000/internal/gardens', {
                 method: 'POST',
-                headers: {"Content-Type": "application/json" },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(garden)
-            }).then(() => {
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to add garden');
+                }
                 console.log("your garden has been added :-)")
+            }).catch(error => {
+                console.error("There was an error with the fetch request:", error);
             })
-            // console.log(garden)
         }
-    }, [gardenId, createdTimestamp]);
+    }, [gardenId, createdTimestamp, formPayload]);
 
     return (
         <div className="flex  items-center justify-center h-screen mt-28">
