@@ -1,10 +1,7 @@
 package com.example.PostGresTests
 
 
-import com.example.database.GardensTable
-import com.example.database.all
-import com.example.database.findGardenById
-import com.example.database.insert
+import com.example.database.*
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
 import org.jetbrains.exposed.sql.*
@@ -87,6 +84,27 @@ class PostgresTestsGardens {
             val singleGarden: Garden = GardensTable.findGardenById(garden2.id)
             assertEquals(singleGarden, garden2)
         }
+    }
+
+    @Test
+    fun `a garden can be added`() {
+
+        val newGarden = Garden(
+            id = UUID.fromString("de5ef0e7-0dbe-479c-a7c8-9f12db7ce225"),
+            createdTimestamp = "123",
+            title = "Sunny Garden",
+            description = "very sunny garden",
+            gardenOwnerFirstName = "Bev",
+            gardenOwnerId = UUID.fromString("73b0210b-3f30-4764-a31d-e25a83840eb7")
+        )
+
+        transaction(testDatabase) {
+            GardensTable.addGardenToDB(newGarden)
+
+            val readGardens: List<Garden> = GardensTable.all()
+            assertEquals(listOf(newGarden), readGardens)
+        }
+
     }
 
     @Test
