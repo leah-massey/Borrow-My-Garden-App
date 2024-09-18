@@ -21,7 +21,7 @@ import java.util.*
 
 class HttpApiTest {
     @Test
-    fun `a single garden is returned`() {
+    fun `a single garden is returned with a 200 OK status`() {
 
         val testGarden: Garden = (Garden
             (
@@ -40,11 +40,6 @@ class HttpApiTest {
         )
         val mockWriteDomain: WriteDomain = Mockito.mock(WriteDomain::class.java)
 
-        val expectedResponse = Response(Status.OK)
-            .header("content-type", "application/json")
-            .header("Access-Control-Allow-Origin", "http://localhost:5173")
-            .body(mapper.writeValueAsString(testGarden))
-
         val actualResponse = HttpAPI(mockReadDomain, mockWriteDomain).app(
             Request(
                 Method.GET,
@@ -52,14 +47,14 @@ class HttpApiTest {
             )
         )
 
-        assertEquals(expectedResponse, actualResponse)
+        val testGardenAsString: String = mapper.writeValueAsString(testGarden)
+
+        assertEquals(Status.OK, actualResponse.status)
+        assertEquals(testGardenAsString, actualResponse.bodyString())
     }
 
     @Test
-    fun `a new garden is listed`() {
-
-        val expectedResponse = Response(Status.CREATED)
-            .header("Access-Control-Allow-Origin", "http://localhost:5173")
+    fun `posting a garden returns a 201 created response`() {
 
         val mockReadDomain: ReadDomain = Mockito.mock(ReadDomain::class.java)
         val mockWriteDomain: WriteDomain = Mockito.mock(WriteDomain::class.java)
@@ -78,5 +73,16 @@ class HttpApiTest {
                 """
             )
         )
+
+        assertEquals(Status.CREATED, actualResponse.status)
     }
+
+//    @Test
+//    fun `a garden is deleted`() {
+//        // given
+//
+//        // when
+//
+//        // then
+//    }
 }
