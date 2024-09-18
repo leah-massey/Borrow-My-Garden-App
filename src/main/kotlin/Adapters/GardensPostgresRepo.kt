@@ -1,10 +1,7 @@
 package com.example.Adapters
 
 import com.example.Ports.GardensRepo
-import com.example.database.GardensTable
-import com.example.database.addGardenToDB
-import com.example.database.all
-import com.example.database.findGardenById
+import com.example.database.*
 import com.example.domain.models.Garden
 import org.http4k.sse.SseMessage
 import org.jetbrains.exposed.sql.Database
@@ -29,6 +26,12 @@ class GardensPostgresRepo(datasource: PGSimpleDataSource): GardensRepo {
     override fun add(garden: Garden) {
         return transaction(database) {
             GardensTable.addGardenToDB(garden)
+        }
+    }
+
+    override fun delete(gardenId: UUID) {
+        return transaction(database) {
+            GardensTable.deleteGardenFromDB(gardenId)
         }
     }
 }
