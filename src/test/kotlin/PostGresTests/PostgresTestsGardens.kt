@@ -21,122 +21,81 @@ class PostgresTestsGardens {
 
     val testDatabase = Database.connect(testDatasource)
 
-    @BeforeEach fun resetDB() {
+    val garden1 = Garden(
+        id = UUID.randomUUID(),
+        createdTimestamp = "31081988",
+        title = "Garden with good soil",
+        description = "Everything grows fast in this garden",
+        gardenOwnerFirstName = "John",
+        gardenOwnerId = UUID.randomUUID(),
+        gardenStatus = GardenStatus.AVAILABLE
+    )
+    val garden2 = Garden(
+        id = UUID.randomUUID(),
+        createdTimestamp = "123",
+        title = "Great Garden",
+        description = "Some details",
+        gardenOwnerFirstName = "Mary",
+        gardenOwnerId = UUID.randomUUID(),
+        gardenStatus = GardenStatus.AVAILABLE
+    )
+
+    @BeforeEach
+    fun resetDB() {
         transaction(testDatabase) {
             SchemaUtils.drop(GardensTable)
             SchemaUtils.createMissingTablesAndColumns(GardensTable)
         }
     }
+
     @Test
     fun `garden profiles can retrieved from the database`() {
-        val garden1 = Garden(
-            id = UUID.randomUUID(),
-            createdTimestamp = "31081988",
-            title = "Garden with good soil",
-            description = "Everything grows fast in this garden",
-            gardenOwnerFirstName = "John",
-            gardenOwnerId = UUID.randomUUID(),
-            gardenStatus = GardenStatus.AVAILABLE
-        )
-        val garden2 = Garden(
-            id = UUID.randomUUID(),
-            createdTimestamp = "123",
-            title = "Great Garden",
-            description = "Some details",
-            gardenOwnerFirstName = "Mary",
-            gardenOwnerId = UUID.randomUUID(),
-            gardenStatus = GardenStatus.AVAILABLE
-        )
-
+        // given
         transaction(testDatabase) {
             GardensTable.insert(garden1)
             GardensTable.insert(garden2)
-
+            // when
             val readGardens: List<Garden> = GardensTable.all()
+            // then
             assertEquals(readGardens, listOf(garden1, garden2))
         }
     }
+
     @Test
     fun `a single garden profile can retrieved from the database`() {
-        val garden1 = Garden(
-            id = UUID.randomUUID(),
-            createdTimestamp = "31081988",
-            title = "Garden with good soil",
-            description = "Everything grows fast in this garden",
-            gardenOwnerFirstName = "John",
-            gardenOwnerId = UUID.randomUUID(),
-            gardenStatus = GardenStatus.AVAILABLE
-        )
-        val garden2 = Garden(
-            id = UUID.randomUUID(),
-            createdTimestamp = "123",
-            title = "Great Garden",
-            description = "Some details",
-            gardenOwnerFirstName = "Mary",
-            gardenOwnerId = UUID.randomUUID(),
-            gardenStatus = GardenStatus.AVAILABLE
-        )
-
+        // given
         transaction(testDatabase) {
             GardensTable.insert(garden1)
             GardensTable.insert(garden2)
-
+            // when
             val singleGarden: Garden = GardensTable.findGardenById(garden2.id)
+            // then
             assertEquals(singleGarden, garden2)
         }
     }
 
     @Test
     fun `a garden can be added`() {
-
-        val newGarden = Garden(
-            id = UUID.fromString("de5ef0e7-0dbe-479c-a7c8-9f12db7ce225"),
-            createdTimestamp = "123",
-            title = "Sunny Garden",
-            description = "very sunny garden",
-            gardenOwnerFirstName = "Bev",
-            gardenOwnerId = UUID.fromString("73b0210b-3f30-4764-a31d-e25a83840eb7")
-        )
-
+        // given
         transaction(testDatabase) {
-            GardensTable.addGardenToDB(newGarden)
-
+            GardensTable.addGardenToDB(garden1)
+            // when
             val readGardens: List<Garden> = GardensTable.all()
-            assertEquals(listOf(newGarden), readGardens)
+            // then
+            assertEquals(listOf(garden1), readGardens)
         }
     }
 
     @Test
     fun `a garden can be deleted`() {
         //given
-        val garden1 = Garden(
-            id = UUID.randomUUID(),
-            createdTimestamp = "31081988",
-            title = "Garden with good soil",
-            description = "Everything grows fast in this garden",
-            gardenOwnerFirstName = "John",
-            gardenOwnerId = UUID.randomUUID(),
-            gardenStatus = GardenStatus.AVAILABLE
-        )
-        val garden2 = Garden(
-            id = UUID.randomUUID(),
-            createdTimestamp = "123",
-            title = "Great Garden",
-            description = "Some details",
-            gardenOwnerFirstName = "Mary",
-            gardenOwnerId = UUID.randomUUID(),
-            gardenStatus = GardenStatus.AVAILABLE
-        )
-
         transaction(testDatabase) {
             GardensTable.insert(garden1)
             GardensTable.insert(garden2)
-
             //when
             GardensTable.deleteGardenFromDB(garden1.id)
-
             //then
-            assertEquals(listOf(garden2), GardensTable.all() )
+            assertEquals(listOf(garden2), GardensTable.all())
         }
     }
 
