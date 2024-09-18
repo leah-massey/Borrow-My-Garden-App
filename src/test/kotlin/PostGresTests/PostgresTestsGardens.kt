@@ -104,7 +104,40 @@ class PostgresTestsGardens {
             val readGardens: List<Garden> = GardensTable.all()
             assertEquals(listOf(newGarden), readGardens)
         }
+    }
 
+    @Test
+    fun `a garden can be deleted`() {
+        //given
+        val garden1 = Garden(
+            id = UUID.randomUUID(),
+            createdTimestamp = "31081988",
+            title = "Garden with good soil",
+            description = "Everything grows fast in this garden",
+            gardenOwnerFirstName = "John",
+            gardenOwnerId = UUID.randomUUID(),
+            gardenStatus = GardenStatus.AVAILABLE
+        )
+        val garden2 = Garden(
+            id = UUID.randomUUID(),
+            createdTimestamp = "123",
+            title = "Great Garden",
+            description = "Some details",
+            gardenOwnerFirstName = "Mary",
+            gardenOwnerId = UUID.randomUUID(),
+            gardenStatus = GardenStatus.AVAILABLE
+        )
+
+        transaction(testDatabase) {
+            GardensTable.insert(garden1)
+            GardensTable.insert(garden2)
+
+            //when
+            GardensTable.deleteGardenFromDB(garden1.id)
+
+            //then
+            assertEquals(listOf(garden2), GardensTable.all() )
+        }
     }
 
     @Test

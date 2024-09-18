@@ -25,6 +25,8 @@ fun GardensTable.findGardenById(gardenId: UUID): Garden = GardensTable.select(Ga
 
 fun GardensTable.addGardenToDB(garden: Garden) = GardensTable.insert(garden)
 
+fun GardensTable.deleteGardenFromDB(gardenId: UUID) = GardensTable.deleteWhere { GardensTable.id eq gardenId}
+
 fun ResultRow.toGarden(): Garden {
     val id = this[GardensTable.id]
     val createdTimestamp = this[GardensTable.created_timestamp]
