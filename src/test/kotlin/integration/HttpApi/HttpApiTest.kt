@@ -1,48 +1,37 @@
 package com.example.HttpApi
 
 import IntegrationTest
-import com.example.Adapters.HttpAPI
-import com.example.Ports.ReadDomain
-import com.example.Ports.WriteDomain
 import com.example.domain.models.Garden
 import org.http4k.core.Method
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import org.junit.jupiter.api.Assertions.*
 import org.http4k.core.*
 import org.http4k.format.Jackson.mapper
-
-
-import java.util.*
 
 class HttpApiTest : IntegrationTest() {
     @Test
     fun `GET internal_gardens_{gardenId} returns a single garden and 200 OK status`() {
         //given
         val user = randomActiveUser()
-        val garden1 = randomAvailableGarden(user)
-        val garden2 = randomAvailableGarden(user)
-        val garden3 = randomAvailableGarden(user)
-        val garden4 = randomAvailableGarden(user)
-        val garden5 = randomAvailableGarden(user)
 
+        val gardens: List<Garden> = multipleRandomAvailableGardens(user, 5)
+        gardens.forEach{garden ->
+            scenario.appTestDatabase.add(garden)
+        }
+
+        val garden1 = randomAvailableGarden(user)
         scenario.appTestDatabase.add(garden1)
-        scenario.appTestDatabase.add(garden2)
-        scenario.appTestDatabase.add(garden3)
-        scenario.appTestDatabase.add(garden4)
-        scenario.appTestDatabase.add(garden5)
 
         // when
         val request = Request(
             Method.GET,
-            "internal/gardens/${garden2.id}"
+            "internal/gardens/${garden1.id}"
         )
         val response = scenario.testApp.app(request)
 
         // then
         assertEquals(Status.OK, response.status)
-        assertEquals(mapper.writeValueAsString(garden2), response.bodyString())
+        assertEquals(mapper.writeValueAsString(garden1), response.bodyString())
     }
 
     @Test
@@ -80,14 +69,9 @@ class HttpApiTest : IntegrationTest() {
             Method.DELETE,
             "internal/gardens/${garden.id}"
         )
+        val response = scenario.testApp.app(request)
 
-        val response =
-
-        val actualResponse = HttpAPI(mockReadDomain, mockWriteDomain).app(
-            Request(Method.DELETE, "internal/gardens/de5ef0e7-0dbe-479c-a7c8-9f12db7ce225")
-        )
         // then
-        Mockito.verify(mockWriteDomain, Mockito.times(1)).deleteGarden(gardenId)
-        assertEquals(Status.OK, actualResponse.status)
+        assertEquals(Status.OK, response.status)
     }
 }

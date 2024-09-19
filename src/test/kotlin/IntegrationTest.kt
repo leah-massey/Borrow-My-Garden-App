@@ -23,6 +23,12 @@ open class IntegrationTest {
         gardenStatus = GardenStatus.AVAILABLE
     )
 
+    fun multipleRandomAvailableGardens(user: User, numberOfGardens: Int): List<Garden> {
+        return List(numberOfGardens) {
+            randomAvailableGarden(user)
+        }
+    }
+
     companion object {
         val scenario = TestScenario()
     }
