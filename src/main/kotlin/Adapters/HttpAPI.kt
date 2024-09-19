@@ -58,6 +58,13 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
             Response(Status.OK)
                 .body(gardenAsJsonString)
                 .header("content-type", "application/json")
+        },
+
+        "internal/gardens/{gardenId}" bind Method.DELETE to {request: Request ->
+            val gardenId: UUID = UUID.fromString(request.path("gardenId"))
+            writeDomain.deleteGarden(gardenId)
+
+            Response(Status.OK)
         }
 
     ))
