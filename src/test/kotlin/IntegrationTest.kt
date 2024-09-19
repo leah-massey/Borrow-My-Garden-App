@@ -2,6 +2,7 @@ import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
 import com.example.domain.models.MembershipStatus
 import com.example.domain.models.User
+import java.time.LocalDateTime
 import java.util.*
 
 open class IntegrationTest {
@@ -16,7 +17,7 @@ open class IntegrationTest {
     fun randomAvailableGarden(user: User): Garden = Garden(
         id = UUID.randomUUID(),
         createdTimestamp = "24062022",
-        title = "Test Garden",
+        title = LocalDateTime.now().toString(),
         description = "Test description",
         gardenOwnerFirstName = user.firstName,
         gardenOwnerId = user.id,
