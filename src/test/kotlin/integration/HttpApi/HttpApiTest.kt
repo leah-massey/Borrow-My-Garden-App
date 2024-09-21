@@ -48,30 +48,25 @@ class HttpApiTest : IntegrationTest() {
         assertEquals(Status.CREATED, response.status)
     }
 
-//    @Test
-//    fun `DELETE internal_gardens_{gardenId} returns a 200 OK response`() {
-//        // is it enough to test only that this triggers deleteGarden to be called?
-//        // should I test that the db is not empty of garden with this id?
-//
-//        // given
-//        val user = randomActiveUser()
-//        val garden = randomAvailableGarden(user)
-//
-//        scenario.appTestDatabase.add(garden)
-//
-//        // when
-//        val request = Request(
-//            Method.DELETE,
-//            "internal/gardens/${garden.id}"
-//        )
-//
-////        val response =
-////
-////        val actualResponse = HttpAPI(mockReadDomain, mockWriteDomain).app(
-////            Request(Method.DELETE, "internal/gardens/de5ef0e7-0dbe-479c-a7c8-9f12db7ce225")
-////        )
-////        // then
-////        Mockito.verify(mockWriteDomain, Mockito.times(1)).deleteGarden(gardenId)
-////        assertEquals(Status.OK, actualResponse.status)
-//    }
+    @Test
+    fun `DELETE internal_gardens_{gardenId} returns a 200 OK response`() {
+        // should I test that the db is empty of garden with this id?
+
+        // given
+        val user = randomActiveUser()
+        val garden = randomGarden(user)
+
+        scenario.appTestDatabase.add(garden)
+
+        // when
+        val request = Request(
+            Method.DELETE,
+            "internal/gardens/${garden.id}"
+        )
+
+        val response = scenario.testApp.app(request)
+
+        // then
+        assertEquals(Status.OK, response.status)
+    }
 }
