@@ -24,6 +24,10 @@ open class IntegrationTest {
         gardenStatus = GardenStatus.AVAILABLE
     )
 
+    fun generateAndAddRandomAvailableGardensToDB(user: User, numberOfGardens: Int) =
+        repeat(numberOfGardens) { scenario.appTestDatabase.add(randomAvailableGarden(user)) }
+
+
     companion object {
         val scenario = TestScenario()
     }
