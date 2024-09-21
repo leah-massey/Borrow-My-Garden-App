@@ -14,7 +14,7 @@ open class IntegrationTest {
         membershipStatus = MembershipStatus.ACTIVE
     )
 
-    fun randomAvailableGarden(user: User): Garden = Garden(
+    fun randomGarden(user: User): Garden = Garden(
         id = UUID.randomUUID(),
         createdTimestamp = LocalDateTime.now().toString(),
         title = "Test Garden",
@@ -25,7 +25,7 @@ open class IntegrationTest {
     )
 
     fun generateAndAddRandomGardensToDB(user: User, numberOfGardens: Int) =
-        repeat(numberOfGardens) { scenario.appTestDatabase.add(randomAvailableGarden(user)) }
+        repeat(numberOfGardens) { scenario.appTestDatabase.add(randomGarden(user)) }
 
     private fun selectRandomStatus(): GardenStatus {
         return GardenStatus.values().toList().shuffled().first()

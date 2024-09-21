@@ -14,7 +14,7 @@ class HttpApiTest : IntegrationTest() {
         val user = randomActiveUser()
         generateAndAddRandomGardensToDB(user, 5)
 
-        val garden = randomAvailableGarden(user)
+        val garden = randomGarden(user)
         scenario.appTestDatabase.add(garden)
 
         // when
@@ -34,7 +34,7 @@ class HttpApiTest : IntegrationTest() {
 
         // given
         val user = randomActiveUser()
-        val garden = randomAvailableGarden(user)
+        val garden = randomGarden(user)
 
         // when
         val request = Request(
