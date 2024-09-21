@@ -16,17 +16,20 @@ open class IntegrationTest {
 
     fun randomAvailableGarden(user: User): Garden = Garden(
         id = UUID.randomUUID(),
-        createdTimestamp = "24062022",
-        title = LocalDateTime.now().toString(),
-        description = "Test description",
+        createdTimestamp = LocalDateTime.now().toString(),
+        title = "Test Garden",
+        description = "Test Description",
         gardenOwnerFirstName = user.firstName,
         gardenOwnerId = user.id,
-        gardenStatus = GardenStatus.AVAILABLE
+        gardenStatus = selectRandomStatus()
     )
 
-    fun generateAndAddRandomAvailableGardensToDB(user: User, numberOfGardens: Int) =
+    fun generateAndAddRandomGardensToDB(user: User, numberOfGardens: Int) =
         repeat(numberOfGardens) { scenario.appTestDatabase.add(randomAvailableGarden(user)) }
 
+    private fun selectRandomStatus(): GardenStatus {
+        return GardenStatus.values().toList().shuffled().first()
+    }
 
     companion object {
         val scenario = TestScenario()

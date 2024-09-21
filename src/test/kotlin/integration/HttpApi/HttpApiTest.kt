@@ -12,7 +12,7 @@ class HttpApiTest : IntegrationTest() {
     fun `GET internal_gardens_{gardenId} returns a single garden and 200 OK status`() {
         //given
         val user = randomActiveUser()
-        generateAndAddRandomAvailableGardensToDB(user, 5)
+        generateAndAddRandomGardensToDB(user, 5)
 
         val garden = randomAvailableGarden(user)
         scenario.appTestDatabase.add(garden)
