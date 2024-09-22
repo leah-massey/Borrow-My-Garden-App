@@ -105,6 +105,23 @@ class PostgresTestsGardens {
             assertEquals(GardensTable.all(), emptyList())
         }
     }
+
+    @Test
+    fun `a garden can have the title updated`() {
+        // given
+        transaction(testDatabase) {
+            GardensTable.insert(garden1)
+            GardensTable.insert(garden2)
+
+            // when
+            GardensTable.updateGardenInDB(garden1.id, title = "New Title")
+
+            val updatedTitle: String = GardensTable.findGardenById(garden1.id).title
+
+            // then
+            assertEquals("New Title", updatedTitle )
+        }
+    }
 }
 
 
