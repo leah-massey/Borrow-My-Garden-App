@@ -8,4 +8,5 @@ interface WriteDomain {
     //should I have it return something??
     fun addGarden(garden: Garden)
     fun deleteGarden(gardenId: UUID)
+    fun updateGardenTitle(gardenId: UUID, title: String)
 }

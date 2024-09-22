@@ -49,4 +49,26 @@ class WriteDomainTest {
         // then
         Mockito.verify(mockGardenRepo, Mockito.times(1)).delete(gardenToBeDeleted.id)
     }
+
+    @Test
+    fun `the update method is triggered for a specified garden`() {
+        // given
+        val mockGardenRepo: GardensRepo = Mockito.mock(GardensRepo::class.java)
+        val writeDomain = WriteDomain(mockGardenRepo)
+
+        val gardenToBeUpdated = Garden(
+            id = UUID.fromString("de5ef0e7-0dbe-479c-a7c8-9f12db7ce225"),
+            createdTimestamp = "123",
+            title = "Sunny Garden",
+            description = "very sunny garden",
+            gardenOwnerFirstName = "Bev",
+            gardenOwnerId = UUID.fromString("73b0210b-3f30-4764-a31d-e25a83840eb7")
+        )
+
+        // when
+        writeDomain.updateGardenTitle(gardenToBeUpdated.id, title = "Very Sunny Garden")
+
+        // then
+        Mockito.verify(mockGardenRepo, Mockito.times(1)).update(gardenToBeUpdated.id, "Very Sunny Garden")
+    }
 }

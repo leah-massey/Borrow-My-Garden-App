@@ -34,5 +34,12 @@ class GardensPostgresRepo(datasource: PGSimpleDataSource): GardensRepo {
             GardensTable.deleteGardenFromDB(gardenId)
         }
     }
+
+    override fun update(gardenId: UUID, title: String) {
+        return transaction(database) {
+            GardensTable.updateGardenInDB(gardenId, title)
+        }
+    }
+
 }
 
