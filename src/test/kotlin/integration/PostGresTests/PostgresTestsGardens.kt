@@ -114,7 +114,7 @@ class PostgresTestsGardens {
             GardensTable.insert(garden2)
 
             // when
-            GardensTable.updateGardenInDB(garden1.id, title = "New Title")
+            GardensTable.updateGardenInDB(garden1.id, mapOf("title" to "New Title"))
 
             val updatedTitle: String = GardensTable.findGardenById(garden1.id).title
 
