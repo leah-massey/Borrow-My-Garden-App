@@ -11,5 +11,5 @@ class WriteDomain(val gardensRepo: GardensRepo): WriteDomain {
 
     override fun deleteGarden(gardenId: UUID) = gardensRepo.delete(gardenId)
 
-    override fun updateGardenTitle(gardenId: UUID, title: String) = gardensRepo.update(gardenId, title)
+    override fun updateGarden(gardenId: UUID, data: Map<String, Any>) = gardensRepo.update(gardenId, data)
 }

@@ -2,6 +2,7 @@ package com.example.database
 
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
+
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.util.*
@@ -27,8 +28,14 @@ fun GardensTable.addGardenToDB(garden: Garden) = GardensTable.insert(garden)
 
 fun GardensTable.deleteGardenFromDB(gardenId: UUID) = GardensTable.deleteWhere { GardensTable.id eq gardenId}
 
-fun GardensTable.updateGardenInDB(gardenId: UUID, title: String) = GardensTable.update ({ GardensTable.id eq gardenId}) {
-    it[GardensTable.title] = title
+fun GardensTable.updateGardenInDB(gardenId: UUID, data: Map<String, Any>) = GardensTable.update ({ GardensTable.id eq gardenId}) {
+   data.forEach { (key, value) ->
+       when (key) {
+           "title" -> it[GardensTable.title] = value as String
+           "description" -> it[GardensTable.description] = value as String
+           "status" -> it [GardensTable.garden_status] = value as GardenStatus
+       }
+   }
 }
 
 fun ResultRow.toGarden(): Garden {
