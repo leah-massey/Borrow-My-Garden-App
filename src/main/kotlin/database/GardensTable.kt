@@ -18,11 +18,14 @@ import java.util.*
         override val primaryKey = PrimaryKey(id, name = "PK_Gardens_Id")
     }
 
+class GardenNotFoundException(gardenId: UUID) : RuntimeException("Garden with ID $gardenId not found")
+
+
 fun GardensTable.all() = selectAll().map {
     it.toGarden()
 }
 
-fun GardensTable.findGardenById(gardenId: UUID): Garden = GardensTable.select(GardensTable.id eq gardenId).map { it.toGarden() }.first()
+fun GardensTable.findGardenById(gardenId: UUID): Garden = GardensTable.select(GardensTable.id eq gardenId).map { it.toGarden() }.firstOrNull() ?: throw GardenNotFoundException(gardenId)
 
 fun GardensTable.addGardenToDB(garden: Garden) = GardensTable.insert(garden)
 

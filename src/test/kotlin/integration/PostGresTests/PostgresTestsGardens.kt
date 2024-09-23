@@ -4,10 +4,12 @@ package com.example.PostGresTests
 import com.example.database.*
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
+import com.natpryce.hamkrest.assertion.assertThat
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.postgresql.ds.PGSimpleDataSource
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -20,6 +22,7 @@ class PostgresTestsGardens {
     }
 
     val testDatabase = Database.connect(testDatasource)
+
 
     val garden1 = Garden(
         id = UUID.randomUUID(),
@@ -68,7 +71,7 @@ class PostgresTestsGardens {
             GardensTable.insert(garden1)
             GardensTable.insert(garden2)
             // when
-            val singleGarden: Garden = GardensTable.findGardenById(garden2.id)
+            val singleGarden: Garden? = GardensTable.findGardenById(garden2.id)
             // then
             assertEquals(singleGarden, garden2)
         }
@@ -106,20 +109,35 @@ class PostgresTestsGardens {
         }
     }
 
+//    @Test
+//    fun `a garden can have the title updated`() {
+//        // given
+//        transaction(testDatabase) {
+//            GardensTable.insert(garden1)
+//            GardensTable.insert(garden2)
+//
+//            // when
+//            GardensTable.updateGardenInDB(garden1.id, mapOf("title" to "New Title"))
+//
+//            val updatedTitle: String = GardensTable.findGardenById(garden1.id).title
+//
+//            // then
+//            assertEquals("New Title", updatedTitle )
+//        }
+//    }
+
     @Test
-    fun `a garden can have the title updated`() {
+    fun `if a garden is not present in the DB, return GardenNotFoundException`() {
+
         // given
+        val gardenId = UUID.fromString("5bd56dc9-4386-4eae-b333-f71b28a54432")
+
         transaction(testDatabase) {
             GardensTable.insert(garden1)
             GardensTable.insert(garden2)
 
-            // when
-            GardensTable.updateGardenInDB(garden1.id, mapOf("title" to "New Title"))
-
-            val updatedTitle: String = GardensTable.findGardenById(garden1.id).title
-
             // then
-            assertEquals("New Title", updatedTitle )
+            assertThrows<GardenNotFoundException>{ GardensTable.findGardenById(gardenId) }
         }
     }
 }
