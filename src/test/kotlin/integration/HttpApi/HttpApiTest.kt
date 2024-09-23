@@ -27,6 +27,7 @@ class HttpApiTest : IntegrationTest() {
         // then
         assertEquals(Status.OK, response.status)
         assertEquals(mapper.writeValueAsString(garden), response.bodyString())
+//        println(response.bodyString())
     }
 
     @Test
@@ -41,6 +42,7 @@ class HttpApiTest : IntegrationTest() {
             Method.POST,
             "internal/gardens"
         ).body(mapper.writeValueAsString(garden))
+//        println(mapper.writeValueAsString(garden))
 
         val response = scenario.testApp.app(request)
 
@@ -68,5 +70,40 @@ class HttpApiTest : IntegrationTest() {
 
         // then
         assertEquals(Status.OK, response.status)
+    }
+
+    @Test
+    fun `PATCH internal_gardens_{gardenId} returns a garden with an updated title and a 200 status`() {
+        // given
+        val user = randomActiveUser()
+        val garden = randomGarden(user)
+
+        scenario.appTestDatabase.add(garden)
+
+        // when
+        val patchRequest = Request(
+            Method.PATCH,
+            "internal/gardens/${garden.id}"
+        ).body("""{"title": "Test Garden Updated Title"}""")
+            .header("content-type", "application/json")
+
+        val patchResponse = scenario.testApp.app(patchRequest)
+
+        val getResponse = scenario.testApp.app(
+            Request(
+                Method.GET,
+                "internal/gardens/${garden.id}"
+            )
+        )
+
+        val updatedGardenJSON = getResponse.bodyString()
+        val updatedGarden = mapper.readTree(updatedGardenJSON)
+
+
+        // then
+        assertEquals(Status.OK, patchResponse.status)
+        assertEquals("Test Garden Updated Title", updatedGarden["title"].asText())
+
+
     }
 }

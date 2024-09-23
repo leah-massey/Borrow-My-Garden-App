@@ -1,16 +1,11 @@
 package com.example.Adapters
 
 import com.example.Ports.WriteDomain
-import com.example.domain.ReadDomain
 import com.example.domain.models.Garden
-import com.example.formats.JacksonMessage
-import com.example.formats.jacksonMessageLens
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.http4k.core.*
-import org.http4k.filter.AllowAll
 import org.http4k.filter.CorsPolicy
-import org.http4k.filter.OriginPolicy
 import org.http4k.filter.ServerFilters
 import org.http4k.format.Jackson.auto
 import org.http4k.routing.bind
@@ -65,7 +60,23 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
             writeDomain.deleteGarden(gardenId)
 
             Response(Status.OK)
+        },
+
+        "internal/gardens/{gardenId}" bind Method.PATCH to { request: Request ->
+            request.header("content-type", "application/json")
+            val gardenId: UUID = UUID.fromString(request.path("gardenId"))
+
+            val dataAsJson = request.bodyString()
+            println("this is the data, ${dataAsJson}")
+
+            val patchDataLens = Body.auto<Map<String, Any>>().toLens()
+            val patchData  = patchDataLens(request)
+
+            writeDomain.updateGarden(gardenId, patchData)
+
+            Response(Status.OK)
         }
+
 
     ))
     private val mapper: ObjectMapper = jacksonObjectMapper()
