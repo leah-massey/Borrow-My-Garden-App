@@ -8,5 +8,5 @@ interface GardensRepo {
     fun get(gardenId: UUID): Garden
     fun add(garden: Garden)
     fun delete(gardenId: UUID)
-    fun update(gardenId: UUID, title: String)
+    fun update(gardenId: UUID, data: Map<String, Any>)
 }

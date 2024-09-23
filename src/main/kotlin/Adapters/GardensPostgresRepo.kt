@@ -35,9 +35,9 @@ class GardensPostgresRepo(datasource: PGSimpleDataSource): GardensRepo {
         }
     }
 
-    override fun update(gardenId: UUID, title: String) {
+    override fun update(gardenId: UUID, data: Map<String, Any>) {
         return transaction(database) {
-            GardensTable.updateGardenInDB(gardenId, title)
+            GardensTable.updateGardenInDB(gardenId, data)
         }
     }
 
