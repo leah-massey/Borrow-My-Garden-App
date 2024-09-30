@@ -17,8 +17,8 @@ The purpose of this project is to build a functioning application, fully tested 
 <!-- ABOUT THE PROJECT -->
 
 <details open>
-  <summary style="background-color: #07004d ; padding: 10px; border-radius: 5px; color: white;">
-    <h3 style="display: inline; margin: 0;">About The Project</h3>
+  <summary>
+    <h3 style="display: inline; margin: 0;">🪴 About The Project</h3>
   </summary>
   <p>Borrow my Garden is a community project where people can list their unused garden spaces, and keen allotment cultivators can find a space on which to grow their fruit and veg.
 
@@ -53,8 +53,8 @@ Typically there would be two users on this platform:
 </details>
 <br>
 <details open>
-  <summary style="background-color:#07004d ; padding: 10px; border-radius: 5px; color: white;">
-    <h3 style="display: inline; margin: 0;">Technologies Used</h3>
+  <summary>
+    <h3 style="display: inline; margin: 0;">🚀 Technologies Used</h3>
   </summary>
 <br>
 
@@ -82,10 +82,10 @@ Typically there would be two users on this platform:
 <br>
 
 <details open>
-  <summary style="background-color:#07004d ; padding: 10px; border-radius: 5px; color: white;">
-    <h3 style="display: inline; margin: 0;">Getting Started</h3>
+  <summary>
+    <h3 style="display: inline; margin: 0;">👩🏼‍💻 Getting Started</h3>
   </summary>
-  <h3>Docker Container</h3>
+  <h3>1. Run Docker Container</h3>
   <p> 
 To access the BorrowMyGarden database, we need to run a Docker Container:
 
@@ -119,7 +119,7 @@ Now run the docker container again and you should see the new docker container I
 
 You now have a Docker Container running with your BorrowMyGarden database
 
-### Start Backend Server
+### 2. Start Backend Server
 - Ensure gradle installed\
   ```gradle -v```
 
