@@ -91,7 +91,7 @@ ___
   <summary>
     <h2 id="getting-started" style="display: inline; margin: 0;">👩🏼‍💻 Getting Started</h2>
   </summary>
-  <h3>1. Run The Docker Container</h3>
+  <h3>1. Setting Up The Database</h3>
   <p> 
 To access the BorrowMyGarden database, we need to run a Docker Container:
 
@@ -104,15 +104,15 @@ To access the BorrowMyGarden database, we need to run a Docker Container:
 - Authenticate your Docker client with a Docker registry:\
   ```docker login```\
   You will be asked to enter your username and password for your Docker account.
-  You should then see ```Login Succeeded```
+  You should then see: ```Login Succeeded```
 
 
 - Run The Docker Container:\
-  ```docker run --name some-postgres -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres``` \
+  ```docker run --name borrow-my-garden-database -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres``` \
   You should see the new docker container ID
 
 >Troubleshooting : \
-```The container name "/some-postgres" is already in use by Container <container_id>```\
+```The container name "/borrow-my-garden-database" is already in use by Container <container_id>```\
 Run:\
 > ```docker stop <container_name_or_id>```\
 ```docker rm <container_name_or_id>```\
@@ -121,24 +121,46 @@ Now run the docker container again and you should see the new docker container I
 - View list of Docker Containers \
   ```docker ps```\
   You will see your new Container listed here.\
-  Run again - until you see that status is 'healthy ' or 'up 10 s' - this means the Container is running.\
+  Run again - until you see that status is 'healthy ' or 'up 10 s' - this means the Container is running.
 
 You now have a Docker Container running with your BorrowMyGarden database
 
-### 2. Start The Backend Server
+### 2. Starting The Backend Server
+
 - Ensure gradle installed\
   ```gradle -v```
+
+- Build the application\
+```./gradlew build```
+
+#### Option 1 - Using Docker:
+ Using Docker will set the project up quickly and avoid dependency issues.
+
+- Ensure Docker is up and running (see DB instructions above)
+
+- Navigate to ./src
+
+- Build the Docker image:\
+```docker build -t borrow-my-garden-backend```
+
+- Run a Container based on the Docker image:\
+```docker run -p 9000:9000 --name borrow-my-garden-backend borrow-my-garden-backend``` \
+You should see the new Docker Container ID returned
+
+- You should now see the backend server running on Port 9000
+
+#### Option 2 - running directly with Gradle : 
 
 - build the distribution package (optional)\
   ** Note: the distribution package does not include test files or dependencies, so you won’t be able to run tests using it.)\
   ```./gradlew distZip```
 
-#### If using an IDE such as IntelliJ:
+#### ➡️ If using an IDE such as IntelliJ:
 
 - Navigate to src/main/kotlin/Main.kt and run by clicking the green arrow (Run icon) to start running the backend server.
 
 
-#### If not using IDE:
+  #### ➡️ If not using IDE:
 
 
 - Navigate to ```src``` directory

@@ -1,3 +1,29 @@
+<details open>
+  <summary>
+    <h2 id="getting-started" style="display: inline; margin: 0;">👩🏼‍💻 Getting Started</h2>
+  </summary>
+
+<p>
+** Note - the Backend server must be up and running before compiling the Client side.
+
+- Ensure node is installed \
+```node -v```
+
+
+- Install all necessary dependencies:\
+```npm install```
+
+
+- Compile Client side application:\
+```npm run dev```
+</p>
+
+</details>
+
+___
+
+⛔️ TEMPLATE BELOW - UPDATE TODO 
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
