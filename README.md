@@ -1,24 +1,23 @@
 <a id="readme-top"></a>
 
 <h3 align="center"> 🌷🌿🥕 Borrow My Garden 🥕🌿🌷</h3>
-
-
-<p style="text-align:center;">
-Borrow My Garden is a learning project that is built with a React FE, a Kotlin BE and Postgres DB.
-The purpose of this project is to build a functioning application, fully tested using TDD. 
+<div align="center">
+<p>Borrow My Garden is a learning project that is built with a React FE, a Kotlin BE and Postgres DB.<br>The purpose of this project is to build a functioning application, fully tested using TDD. 
 </p>
+</div>
 
 
 ### Table of contents
 - [About The Project](#about-the-project)
 - [Technologies Used](#technologies-used)
 - [Getting Started](#getting-started)
+<br>
 
 <!-- ABOUT THE PROJECT -->
 
 <details open>
   <summary>
-    <h3 style="display: inline; margin: 0;">🪴 About The Project</h3>
+    <h3 id="about-the-project" style="display: inline; margin: 0;">🪴 About The Project</h3>
   </summary>
   <p>Borrow my Garden is a community project where people can list their unused garden spaces, and keen allotment cultivators can find a space on which to grow their fruit and veg.
 
@@ -54,7 +53,7 @@ Typically there would be two users on this platform:
 <br>
 <details open>
   <summary>
-    <h3 style="display: inline; margin: 0;">🚀 Technologies Used</h3>
+    <h3 id="technologies-used" style="display: inline; margin: 0;">🚀 Technologies Used</h3>
   </summary>
 <br>
 
@@ -83,7 +82,7 @@ Typically there would be two users on this platform:
 
 <details open>
   <summary>
-    <h3 style="display: inline; margin: 0;">👩🏼‍💻 Getting Started</h3>
+    <h3 id="getting-started" style="display: inline; margin: 0;">👩🏼‍💻 Getting Started</h3>
   </summary>
   <h3>1. Run Docker Container</h3>
   <p> 
