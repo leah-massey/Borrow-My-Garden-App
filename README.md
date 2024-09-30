@@ -132,6 +132,7 @@ You now have a Docker Container running with your BorrowMyGarden database
 
 - Build the application\
 ```./gradlew build```
+** note I have been finding gradle-wrapper.jar is missing in my project. To fix, run ```gradle wrapper``` then try ```gradle build``` again.
 
 #### Option 1 - Using Docker:
  Using Docker will set the project up quickly and avoid dependency issues.
