@@ -139,7 +139,7 @@ You now have a Docker Container running with your BorrowMyGarden database
   ```./gradlew distZip```
   --- this is great to do as tests will fail as they currently run against a test DB ??
 
-#### Option 1 - Using Docker: **NEEDS WORK**
+#### Option 1 - Using Docker: ** NEEDS WORK, use option 2 **
  Using Docker will set the project up quickly and avoid dependency issues.
 
 - Ensure Docker is up and running (see DB instructions above)
