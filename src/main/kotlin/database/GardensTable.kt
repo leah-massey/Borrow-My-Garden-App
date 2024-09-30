@@ -25,8 +25,12 @@ fun GardensTable.all() = selectAll().map {
     it.toGarden()
 }
 
-fun GardensTable.findGardenById(gardenId: UUID): Garden = GardensTable.select(GardensTable.id eq gardenId).map { it.toGarden() }.firstOrNull() ?: throw GardenNotFoundException(gardenId)
-
+fun GardensTable.findGardenById(gardenId: UUID): Garden {
+    return GardensTable.selectAll()
+        .filter { it[GardensTable.id] == gardenId }
+        .map { it.toGarden() }
+        .firstOrNull() ?: throw GardenNotFoundException(gardenId)
+}
 fun GardensTable.addGardenToDB(garden: Garden) = GardensTable.insert(garden)
 
 fun GardensTable.deleteGardenFromDB(gardenId: UUID) = GardensTable.deleteWhere { GardensTable.id eq gardenId}
