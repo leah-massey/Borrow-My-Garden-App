@@ -41,12 +41,6 @@ Typically there would be two users on this platform:
 - I am keen to connect with my community
 
 
-
-## Package
-```
-./gradlew distZip
-```
-
 ## Getting started
 ### Docker Container
 To access the BorrowMyGarden database, we need to run a Docker Container:
