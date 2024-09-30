@@ -1,6 +1,6 @@
 <a id="readme-top"></a>
 
-<h3 align="center">Borrow My Garden</h3>
+<h3 align="center"> 🌷🌿🥕 Borrow My Garden 🥕🌿🌷</h3>
 
 
 <p style="text-align:center;">
