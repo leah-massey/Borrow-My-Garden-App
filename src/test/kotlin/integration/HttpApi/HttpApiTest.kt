@@ -27,7 +27,6 @@ class HttpApiTest : IntegrationTest() {
         // then
         assertEquals(Status.OK, response.status)
         assertEquals(mapper.writeValueAsString(garden), response.bodyString())
-//        println(response.bodyString())
     }
 
     @Test
@@ -42,7 +41,6 @@ class HttpApiTest : IntegrationTest() {
             Method.POST,
             "internal/gardens"
         ).body(mapper.writeValueAsString(garden))
-//        println(mapper.writeValueAsString(garden))
 
         val response = scenario.testApp.app(request)
 
@@ -99,11 +97,8 @@ class HttpApiTest : IntegrationTest() {
         val updatedGardenJSON = getResponse.bodyString()
         val updatedGarden = mapper.readTree(updatedGardenJSON)
 
-
         // then
         assertEquals(Status.OK, patchResponse.status)
         assertEquals("Test Garden Updated Title", updatedGarden["title"].asText())
-
-
     }
 }
