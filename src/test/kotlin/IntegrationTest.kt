@@ -28,7 +28,7 @@ open class IntegrationTest {
         repeat(numberOfGardens) { scenario.appTestDatabase.add(randomGarden(user)) }
 
     private fun selectRandomStatus(): GardenStatus {
-        return GardenStatus.values().toList().shuffled().first()
+        return GardenStatus.entries.shuffled().first()
     }
 
     companion object {
