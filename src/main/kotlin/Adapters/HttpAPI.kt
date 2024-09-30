@@ -46,7 +46,7 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
 
         "internal/gardens/{gardenId}" bind Method.GET to { request: Request ->
             val gardenId: UUID = UUID.fromString(request.path("gardenId"))
-            val garden: Garden = readDomain.viewSingleGarden(gardenId)
+            val garden: Garden? = readDomain.viewSingleGarden(gardenId)
             val gardenAsJsonString: String = mapper.writeValueAsString(garden)
 
 
@@ -76,8 +76,6 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
 
             Response(Status.OK)
         }
-
-
     ))
     private val mapper: ObjectMapper = jacksonObjectMapper()
 }
