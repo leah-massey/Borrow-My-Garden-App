@@ -142,7 +142,7 @@ You now have a Docker Container running with your BorrowMyGarden database
 - Navigate to ./src
 
 - Build the Docker image:\
-```docker build -t borrow-my-garden-backend```
+```docker build -t borrow-my-garden-backend .```
 
 - Run a Container based on the Docker image:\
 ```docker run -p 9000:9000 --name borrow-my-garden-backend borrow-my-garden-backend``` \
@@ -155,6 +155,7 @@ You should see the new Docker Container ID returned
 - build the distribution package (optional)\
   ** Note: the distribution package does not include test files or dependencies, so you won’t be able to run tests using it.)\
   ```./gradlew distZip```
+ --- this is great to do as tests will fail as they currently run against a test DB
 
 #### ➡️ If using an IDE such as IntelliJ:
 
