@@ -7,11 +7,13 @@
 </div>
 
 
-### Table of contents
+<h3>Table of contents</h3>
+
 - [About The Project](#about-the-project)
 - [Technologies Used](#technologies-used)
 - [Getting Started](#getting-started)
-<br>
+
+___
 
 <!-- ABOUT THE PROJECT -->
 
@@ -51,6 +53,8 @@ Typically there would be two users on this platform:
 - I am keen to connect with my community</p>
 </details>
 
+___
+
 <details open>
   <summary>
     <h2 id="technologies-used" style="display: inline; margin: 0;">🚀 Technologies Used</h2>
@@ -78,6 +82,7 @@ Typically there would be two users on this platform:
 
 </details>
 
+___
 
 <details open>
   <summary>
