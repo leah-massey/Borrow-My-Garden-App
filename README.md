@@ -108,11 +108,11 @@ To access the BorrowMyGarden database, we need to run a Docker Container:
 
 
 - Run The Docker Container:\
-  ```docker run --name borrow-my-garden-database -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres``` \
+  ```docker run --name borrow-my-garden-db -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres``` \
   You should see the new docker container ID
 
 >Troubleshooting : \
-```The container name "/borrow-my-garden-database" is already in use by Container <container_id>```\
+```The container name "/borrow-my-garden-db" is already in use by Container <container_id>```\
 Run:\
 > ```docker stop <container_name_or_id>```\
 ```docker rm <container_name_or_id>```\
