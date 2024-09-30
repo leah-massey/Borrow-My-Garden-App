@@ -50,7 +50,7 @@ Typically there would be two users on this platform:
 - I may already have tools
 - I am keen to connect with my community</p>
 </details>
-<br>
+
 <details open>
   <summary>
     <h2 id="technologies-used" style="display: inline; margin: 0;">🚀 Technologies Used</h2>
@@ -78,13 +78,12 @@ Typically there would be two users on this platform:
 
 </details>
 
-<br>
 
 <details open>
   <summary>
     <h2 id="getting-started" style="display: inline; margin: 0;">👩🏼‍💻 Getting Started</h2>
   </summary>
-  <h3>1. Run Docker Container</h3>
+  <h3>1. Run The Docker Container</h3>
   <p> 
 To access the BorrowMyGarden database, we need to run a Docker Container:
 
