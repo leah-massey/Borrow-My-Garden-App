@@ -24,7 +24,7 @@ val kotlinVersion: String by project
 val exposedVersion: String by project
 
 application {
-    mainClass = "com.example.BorrowMyGardenMainKt"
+    mainClass = "MainKt"
 }
 
 repositories {
