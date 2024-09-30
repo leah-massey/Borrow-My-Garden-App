@@ -101,7 +101,7 @@ To access the BorrowMyGarden database, we need to run a Docker Container:
   You should then see ```Login Succeeded```
 
 
-- Run the Docker Container:\
+- Run The Docker Container:\
   ```docker run --name some-postgres -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres``` \
   You should see the new docker container ID
 
@@ -119,15 +119,13 @@ Now run the docker container again and you should see the new docker container I
 
 You now have a Docker Container running with your BorrowMyGarden database
 
-### 2. Start Backend Server
+### 2. Start The Backend Server
 - Ensure gradle installed\
   ```gradle -v```
 
 - build the distribution package (optional)\
   ** Note: the distribution package does not include test files or dependencies, so you won’t be able to run tests using it.)\
   ```./gradlew distZip```
-
--
 
 #### If using an IDE such as IntelliJ:
 
