@@ -134,7 +134,12 @@ You now have a Docker Container running with your BorrowMyGarden database
 ```./gradlew build```
 ** note I have been finding gradle-wrapper.jar is missing in my project. To fix, run ```gradle wrapper``` then try ```gradle build``` again.
 
-#### Option 1 - Using Docker:
+- build the distribution package (optional)\
+  ** Note: the distribution package does not include test files or dependencies, so you won’t be able to run tests using it.)\
+  ```./gradlew distZip```
+  --- this is great to do as tests will fail as they currently run against a test DB ??
+
+#### Option 1 - Using Docker: **NEEDS WORK**
  Using Docker will set the project up quickly and avoid dependency issues.
 
 - Ensure Docker is up and running (see DB instructions above)
@@ -150,12 +155,7 @@ You should see the new Docker Container ID returned
 
 - You should now see the backend server running on Port 9000
 
-#### Option 2 - running directly with Gradle : 
-
-- build the distribution package (optional)\
-  ** Note: the distribution package does not include test files or dependencies, so you won’t be able to run tests using it.)\
-  ```./gradlew distZip```
- --- this is great to do as tests will fail as they currently run against a test DB
+#### Option 2 - running directly with Gradle :
 
 #### ➡️ If using an IDE such as IntelliJ:
 
