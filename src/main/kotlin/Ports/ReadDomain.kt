@@ -5,5 +5,5 @@ import java.util.*
 
 interface ReadDomain {
     fun viewGardens(): List<Garden>
-    fun viewSingleGarden(gardenId: UUID): Garden
+    fun viewSingleGarden(gardenId: UUID): Garden?
 }
