@@ -17,7 +17,7 @@ The purpose of this project is to build a functioning application, fully tested 
 <!-- ABOUT THE PROJECT -->
 
 <details open>
-  <summary>
+  <summary style="background-color: #07004d ; padding: 10px; border-radius: 5px; color: white;">
     <h3 style="display: inline; margin: 0;">About The Project</h3>
   </summary>
   <p>Borrow my Garden is a community project where people can list their unused garden spaces, and keen allotment cultivators can find a space on which to grow their fruit and veg.
@@ -51,11 +51,13 @@ Typically there would be two users on this platform:
 - I may already have tools
 - I am keen to connect with my community</p>
 </details>
-
+<br>
 <details open>
-  <summary>
+  <summary style="background-color:#07004d ; padding: 10px; border-radius: 5px; color: white;">
     <h3 style="display: inline; margin: 0;">Technologies Used</h3>
   </summary>
+<br>
+
 
 ![Static Badge](https://img.shields.io/badge/Koltin-%23ffcc00?style=for-the-badge&logo=kotlin&logoColor=black)
 
@@ -77,8 +79,10 @@ Typically there would be two users on this platform:
 
 </details>
 
+<br>
+
 <details open>
-  <summary>
+  <summary style="background-color:#07004d ; padding: 10px; border-radius: 5px; color: white;">
     <h3 style="display: inline; margin: 0;">Getting Started</h3>
   </summary>
   <h3>Docker Container</h3>
