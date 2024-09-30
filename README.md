@@ -52,6 +52,8 @@ Typically there would be two users on this platform:
 - I don’t have time / desire to grow things and look after the garden
 - I may already have tools
 - I am keen to connect with my community</p>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 </details>
 
 ___
@@ -80,7 +82,7 @@ ___
 ![Static Badge](https://img.shields.io/badge/JUnit-%23ccee66?style=for-the-badge&logo=Junit&logoColor=black)
 
 [//]: # (remaining colour refs: 99cc33, 669900)
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 </details>
 
 ___
@@ -146,8 +148,9 @@ You now have a Docker Container running with your BorrowMyGarden database
 
 ** Note Backend server must be started before the Client side server (To start Client side server see client/README.md for instructions)
 </p>
-</details>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+</details>
+
 
 
 
