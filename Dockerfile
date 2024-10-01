@@ -6,14 +6,17 @@ WORKDIR /app
 # Copy the app package and package-lock.json file
 COPY package*.json ./
 
-
 # Copy local directories to the current local directory of our docker image (/app)
 COPY ./src ./src
-COPY ./public ./public
 
 # Copy the JAR file into the container
 COPY build/libs/BorrowMyGardenMain.jar app.jar
 
+#RUN ./gradlew build
+
+#EXPOSE 9000
+
 LABEL authors="leahmassey"
 
-ENTRYPOINT ["top", "-b"]
+#ENTRYPOINT ["top", "-b"] - not sure if needed
+ENTRYPOINT ["java", "-jar", "app.jar"]
