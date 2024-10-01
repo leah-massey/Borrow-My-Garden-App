@@ -108,7 +108,7 @@ To access the BorrowMyGarden database, we need to run a Docker Container:
 
 
 - Run The Docker Container:\
-  ```docker run --name borrow-my-garden-db -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres``` \
+  ```docker run --name borrow-my-garden-db --network borrow-my-garden-network -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres``` \
   You should see the new docker container ID
 
 >Troubleshooting : \
@@ -132,12 +132,11 @@ You now have a Docker Container running with your BorrowMyGarden database
 
 - Build the application\
 ```./gradlew build```
-** note I have been finding gradle-wrapper.jar is missing in my project. To fix, run ```gradle wrapper``` then try ```gradle build``` again.
 
-- build the distribution package (optional)\
+- build the distribution package (optional) ???? \
   ** Note: the distribution package does not include test files or dependencies, so you won’t be able to run tests using it.)\
   ```./gradlew distZip```
-  --- this is great to do as tests will fail as they currently run against a test DB ??
+ 
 
 #### Option 1 - Using Docker: ** NEEDS WORK, use option 2 **
  Using Docker will set the project up quickly and avoid dependency issues.
@@ -150,22 +149,14 @@ You now have a Docker Container running with your BorrowMyGarden database
 ```docker build -t borrow-my-garden-backend .```
 
 - Run a Container based on the Docker image:\
-```docker run -p 9000:9000 --name borrow-my-garden-backend borrow-my-garden-backend``` \
+```docker run -p 9000:9000 --network borrow-my-garden-network --name borrow-my-garden-backend borrow-my-garden-backend``` \
 You should see the new Docker Container ID returned
 
-- You should now see the backend server running on Port 9000
+- You should now see the backend server running on Port 9000 ~~
 
 #### Option 2 - running directly with Gradle :
 
-#### ➡️ If using an IDE such as IntelliJ:
-
-- Navigate to src/main/kotlin/Main.kt and run by clicking the green arrow (Run icon) to start running the backend server.
-
-
-  #### ➡️ If not using IDE:
-
-
-- Navigate to ```src``` directory
+- From the root of the project
 
 - Start the server
   ```./gradlew run```
