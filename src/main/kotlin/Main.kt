@@ -1,4 +1,3 @@
-package com.example
 
 import com.example.Adapters.GardensPostgresRepo
 import com.example.Adapters.HttpAPI
@@ -11,8 +10,6 @@ import org.http4k.filter.DebuggingFilters.PrintRequest
 import org.http4k.server.SunHttp
 import org.http4k.server.asServer
 import org.postgresql.ds.PGSimpleDataSource
-
-
 
 fun main() {
     val gardensRepoDatasource: GardensRepo = GardensPostgresRepo(PGSimpleDataSource().apply {
