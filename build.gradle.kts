@@ -1,6 +1,9 @@
-import org.gradle.api.JavaVersion.VERSION_11
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+import org.gradle.api.JavaVersion.VERSION_21
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
+import org.gradle.api.tasks.testing.Test
+import org.gradle.jvm.tasks.Jar
 
 plugins {
     kotlin("jvm") version "2.0.0"
@@ -27,6 +30,8 @@ application {
     mainClass = "MainKt"
 }
 
+
+
 repositories {
     mavenCentral()
 }
@@ -37,7 +42,7 @@ tasks {
     withType<KotlinJvmCompile>().configureEach {
         compilerOptions {
             allWarningsAsErrors = false
-            jvmTarget.set(JVM_11)
+            jvmTarget.set(JVM_21)
             freeCompilerArgs.add("-Xjvm-default=all")
         }
     }
@@ -47,14 +52,31 @@ tasks {
     }
 
     java {
-        sourceCompatibility = VERSION_11
-        targetCompatibility = VERSION_11
+        sourceCompatibility = VERSION_21
+        targetCompatibility = VERSION_21
     }
+
+    withType<Jar> {
+        manifest {
+            attributes("Main-Class" to "MainKt")
+        }
+
+//        from(configurations.runtimeClasspath.map { file ->
+//            if (file.isDirectory) file else zipTree(file)
+//        })
+    }
+
+
 }
 
 dependencies {
     implementation("org.http4k:http4k-core:${http4kVersion}")
     implementation("org.http4k:http4k-format-jackson:${http4kVersion}")
+//    implementation("org.http4k:http4k-dev:5.23.0.0")
+    implementation(platform("org.http4k:http4k-bom:5.32.3.0"))
+    implementation("org.http4k:http4k-core")
+    implementation("org.http4k:http4k-server-undertow")
+    implementation("org.http4k:http4k-client-apache")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
 
     implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
@@ -65,6 +87,9 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-test")
     implementation("org.jetbrains.kotlin:kotlin-test-junit5")
+
+    implementation(platform("dev.forkhandles:forkhandles-bom:2.20.0.0"))
+    implementation("dev.forkhandles:result4k")
 
 
 //    implementation("org.jetbrains.kotlinx:dataframe:0.13.1")
