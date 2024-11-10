@@ -19,6 +19,7 @@ out/
 
 ### Eclipse ###
 .apt_generated
+.log
 .classpath
 .factorypath
 .project
@@ -42,5 +43,4 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-### Ignore Jar Files ###
-#*.jar
+
