@@ -96,9 +96,8 @@ ___
   <summary>
     <h2 id="getting-started" style="display: inline; margin: 0;">👩🏼‍💻 Getting Started</h2>
   </summary>
-  <h3>1. Setting Up The Database</h3>
-  <p> 
-To access the BorrowMyGarden database, we need to run a Docker Container:
+
+Firstly you will need to create a network for our Docker Containers. 
 
 - Create an account in [Docker](https://login.docker.com/u/login/identifier?state=hKFo2SB1RVBzWTNlZDBRci16alAxNTRTV1Vwckd2Vkczb1AxTaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIF83Q1ZTRXNBUGUtRWxYLTFpZmlSb2hyeEg3Rk1YcUZro2NpZNkgRmkyQ0VleDZtMzhkS1lxdnZaWVljSms5SUN0cGc3ZzQ)
 
@@ -111,10 +110,20 @@ To access the BorrowMyGarden database, we need to run a Docker Container:
   You will be asked to enter your username and password for your Docker account.
   You should then see: ```Login Succeeded```
 
+- Create network for containers: 
+```docker network create borrow-my-garden-network```
 
-- Run The Docker Container:\
-  ```docker run --name borrow-my-garden-db --network borrow-my-garden-network -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres``` \
-  You should see the new docker container ID
+  <h3>1. Setting Up The Database</h3>
+  <p> 
+From the root of this app:
+Build a Docker container for the Database:
+
+- Run The Docker Container:
+  ```shell
+  ./scripts/dockerDatabaseBuild.sh
+  ```
+
+You should see the new docker container ID
 
 >Troubleshooting : \
 ```The container name "/borrow-my-garden-db" is already in use by Container <container_id>```\
@@ -143,21 +152,17 @@ You now have a Docker Container running with your BorrowMyGarden database
   ```./gradlew distZip```
  
 
-#### Option 1 - Using Docker: ** NEEDS WORK, use option 2 **
+#### Option 1 - Using Docker:
  Using Docker will set the project up quickly and avoid dependency issues.
 
-- Ensure Docker is up and running (see DB instructions above)
+- Ensure your Docker App is up and running (see instructions above)
 
-- Navigate to ./src
-
-- Build the Docker image:\
-```docker build -t borrow-my-garden-backend .```
-
-- Run a Container based on the Docker image:\
-```docker run -p 9000:9000 --network borrow-my-garden-network --name borrow-my-garden-backend borrow-my-garden-backend``` \
-You should see the new Docker Container ID returned
-
-- You should now see the backend server running on Port 9000 ~~
+- From the project root, build the Docker image & run the Container based on this image:
+  ```shell
+  ./scripts/dockerBackendBuild.sh
+  ```
+  
+- You should now see the backend server running on Port 9000 
 
 #### Option 2 - running directly with Gradle :
 

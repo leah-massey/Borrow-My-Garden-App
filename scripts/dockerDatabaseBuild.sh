@@ -1,0 +1,1 @@
+docker run --name borrow-my-garden-db --network borrow-my-garden-network -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres
