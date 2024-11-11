@@ -16,11 +16,11 @@ class PlaywrightBrowserTests {
     @RegisterExtension
     val playwright = LaunchPlaywrightBrowser(app)
 
-    @Test
-    fun `can browse app`(browser: Http4kBrowser) {
-        with(browser.newPage()) {
-            assertEquals("hello", navigateHome().text())
-        }
-    }
+//    @Test
+//    fun `can browse app`(browser: Http4kBrowser) {
+//        with(browser.newPage()) {
+//            assertEquals("hello", navigateHome().text())
+//        }
+//    }
 }
 

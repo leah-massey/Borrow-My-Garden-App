@@ -1,7 +1,11 @@
 package com.example.database
 
+import com.example.Adapters.SingleGardenRetrievalError
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
+import dev.forkhandles.result4k.Failure
+import dev.forkhandles.result4k.Result4k
+import dev.forkhandles.result4k.Success
 
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -25,11 +29,17 @@ fun GardensTable.all() = selectAll().map {
     it.toGarden()
 }
 
-fun GardensTable.findGardenById(gardenId: UUID): Garden {
-    return GardensTable.selectAll()
+fun GardensTable.findGardenById(gardenId: UUID): Result4k<Garden, SingleGardenRetrievalError> {
+  val garden = GardensTable.selectAll()
         .filter { it[GardensTable.id] == gardenId }
         .map { it.toGarden() }
-        .firstOrNull() ?: throw GardenNotFoundException(gardenId)
+        .firstOrNull()
+
+    return if (garden != null) {
+        Success(garden)
+    } else {
+        Failure(SingleGardenRetrievalError.GardenNotFound(gardenId))
+    }
 }
 fun GardensTable.addGardenToDB(garden: Garden) = GardensTable.insert(garden)
 

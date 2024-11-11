@@ -1,9 +1,13 @@
 package unit.domain
 
+import com.example.Adapters.SingleGardenRetrievalError
 import com.example.Ports.GardensRepo
 import com.example.database.GardenNotFoundException
 import com.example.domain.ReadDomain
 import com.example.domain.models.Garden
+import dev.forkhandles.result4k.Result4k
+import dev.forkhandles.result4k.Success
+import dev.forkhandles.result4k.valueOrNull
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import org.junit.jupiter.api.Assertions.*
@@ -58,11 +62,11 @@ class ReadDomainTest {
         )
 
         val mockGardenRepo: GardensRepo = mock(GardensRepo::class.java)
-        `when` (mockGardenRepo.get(testGarden2.id)).thenReturn(testGarden2)
+        `when` (mockGardenRepo.get(testGarden2.id)).thenReturn(Success(testGarden2))
 
         val underTest = ReadDomain(mockGardenRepo)
 
-        val expected: Garden = testGarden2
+        val expected: Result4k<Garden, SingleGardenRetrievalError> = Success(testGarden2)
 
         val actual = underTest.viewSingleGarden(testGarden2.id)
         assertEquals(expected, actual)

@@ -3,6 +3,8 @@ package com.example.Adapters
 import com.example.Ports.GardensRepo
 import com.example.database.*
 import com.example.domain.models.Garden
+import dev.forkhandles.result4k.Result4k
+
 import org.http4k.sse.SseMessage
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
@@ -18,11 +20,13 @@ class GardensPostgresRepo(datasource: PGSimpleDataSource): GardensRepo {
             GardensTable.all()
         }
     }
-    override fun get(gardenId: UUID): Garden {
-        return transaction(database) {
+    override fun get(gardenId: UUID): Result4k<Garden, SingleGardenRetrievalError> {
+        val garden = transaction(database) {
             GardensTable.findGardenById(gardenId)
         }
+        return garden
     }
+
     override fun add(garden: Garden) {
         return transaction(database) {
             GardensTable.addGardenToDB(garden)

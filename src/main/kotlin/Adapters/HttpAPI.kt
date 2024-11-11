@@ -1,5 +1,6 @@
 package com.example.Adapters
-
+import dev.forkhandles.result4k.Failure
+import dev.forkhandles.result4k.Success
 import com.example.Ports.WriteDomain
 import com.example.domain.models.Garden
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -46,13 +47,16 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
 
         "internal/gardens/{gardenId}" bind Method.GET to { request: Request ->
             val gardenId: UUID = UUID.fromString(request.path("gardenId"))
-            val garden: Garden? = readDomain.viewSingleGarden(gardenId)
-            val gardenAsJsonString: String = mapper.writeValueAsString(garden)
 
-
-            Response(Status.OK)
-                .body(gardenAsJsonString)
-                .header("content-type", "application/json")
+            when (val garden = readDomain.viewSingleGarden(gardenId)) {
+                is Failure -> gardenFailureCase(garden.reason)
+                is Success -> {
+                    val gardenAsJsonString: String = mapper.writeValueAsString(garden)
+                    Response(Status.OK)
+                        .body(gardenAsJsonString)
+                        .header("content-type", "application/json")
+                }
+            }
         },
 
         "internal/gardens/{gardenId}" bind Method.DELETE to {request: Request ->
@@ -78,4 +82,13 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
         }
     ))
     private val mapper: ObjectMapper = jacksonObjectMapper()
+}
+
+private fun gardenFailureCase(gardenRetrievalError: SingleGardenRetrievalError) = when (gardenRetrievalError) {
+    is SingleGardenRetrievalError.GardenNotFound -> Response(Status.BAD_REQUEST).body(gardenRetrievalError.toString())
+}
+
+sealed class SingleGardenRetrievalError(val description: String) {
+    data class GardenNotFound(val gardenId: UUID) : SingleGardenRetrievalError(description = "Could not find requested garden:${gardenId}.")
+    // add other error instances
 }
