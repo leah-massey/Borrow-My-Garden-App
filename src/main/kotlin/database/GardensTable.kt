@@ -9,12 +9,12 @@ import java.util.*
 
     object GardensTable: Table() {
         val id: Column<UUID> = uuid("id")
-        val created_timestamp: Column<String> = varchar("createdTimestamp", length = 100)
+        val created_timestamp: Column<String> = varchar("created_timestamp", length = 100)
         val title: Column<String> = varchar("title", length = 100)
         val description: Column<String> = varchar("description", length = 1000)
-        val garden_owner_first_name: Column<String> = varchar("gardenOwnerFirstName", length = 100)
-        val garden_owner_id: Column<UUID> = uuid("gardenOwnerId")
-        val garden_status: Column<GardenStatus> = enumerationByName("gardenStatus", length = 100)
+        val garden_owner_first_name: Column<String> = varchar("garden_owner_first_name", length = 100)
+        val garden_owner_id: Column<UUID> = uuid("garden_owner_id")
+        val garden_status: Column<GardenStatus> = enumerationByName("garden_status", length = 100)
         override val primaryKey = PrimaryKey(id, name = "PK_Gardens_Id")
     }
 
@@ -40,7 +40,7 @@ fun GardensTable.updateGardenInDB(gardenId: UUID, data: Map<String, Any>) = Gard
        when (key) {
            "title" -> it[GardensTable.title] = value as String
            "description" -> it[GardensTable.description] = value as String
-           "status" -> it [GardensTable.garden_status] = value as GardenStatus
+           "garden_status" -> it [GardensTable.garden_status] = value as GardenStatus
        }
    }
 }

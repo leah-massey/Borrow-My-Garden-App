@@ -14,8 +14,12 @@ import org.postgresql.ds.PGSimpleDataSource
 fun main() {
     val gardensRepoDatasource: GardensRepo = GardensPostgresRepo(PGSimpleDataSource().apply {
         user = "postgres"
+        password = "mysecretpassword"
         databaseName = "borrowmygarden"
+        serverNames = arrayOf(System.getenv("DB_HOST") ?: "localhost") // will read from docker, otherwise will default to localhost
+        portNumbers = intArrayOf(System.getenv("DB_PORT")?.toInt() ?: 5432) // same as above although maybe not needed as always 5432
     })
+
     val readDomain = ReadDomain(gardensRepoDatasource)
     val writeDomain = WriteDomain(gardensRepoDatasource)
     val httpAPI = HttpAPI(readDomain, writeDomain)

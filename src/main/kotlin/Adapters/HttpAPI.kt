@@ -75,6 +75,11 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
             writeDomain.updateGarden(gardenId, patchData)
 
             Response(Status.OK)
+        },
+
+        "ping" bind Method.GET to { request: Request ->
+            Response(Status.OK)
+                .body("pong")
         }
     ))
     private val mapper: ObjectMapper = jacksonObjectMapper()
