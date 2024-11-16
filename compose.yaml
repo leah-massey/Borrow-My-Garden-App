@@ -1,0 +1,41 @@
+services:
+  borrow-my-garden-db:
+    image: postgres:latest
+    container_name: borrow-my-garden-db
+    networks:
+      - borrow-my-garden-network
+    ports:
+      - "6543:5432"
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+    volumes:
+      - borrow-my-garden-data:/var/lib/postgresql/data
+
+  borrow-my-garden-backend:
+    build:
+      context: .
+    #image: borrow-my-garden-backend
+    container_name: borrow-my-garden-backend-container
+    networks:
+      - borrow-my-garden-network
+    ports:
+      - "9000:9000"
+    environment:
+        - DB_HOST=borrow-my-garden-db  # Database host (points to the DB service name)
+        - DB_PORT=5432  # PostgreSQL default port
+        - DB_NAME=borrowmygarden  # Database name
+        - DB_USER=postgres  # Database user
+        - DB_PASSWORD=mysecretpassword  # Database password
+    depends_on:
+        - borrow-my-garden-db  # Ensure backend waits for the DB service to be ready
+
+
+networks:
+  borrow-my-garden-network:
+    external: true
+
+volumes:
+  borrow-my-garden-data:
+     # Define the volume for persistence driver: local
+    name: borrow-my-garden-data
+    external: true
