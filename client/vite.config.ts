@@ -9,5 +9,9 @@ export default defineConfig({
     postcss: {
       plugins: [tailwindcss()],
     },
-  }
+  },
+  server: {
+    host: '0.0.0.0', // Allow external access to the dev server
+    port: 5173,      // Match the port in docker-compose.yml
+  },
 })
