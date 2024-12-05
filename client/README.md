@@ -5,6 +5,7 @@
 
 <p>
 ** Note - the Backend server must be up and running before compiling the Client side.
+Navigate to the /client directory
 
 - Ensure node is installed \
 ```node -v```
