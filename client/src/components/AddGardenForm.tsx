@@ -1,13 +1,14 @@
 import {useEffect, useState} from "react";
 import {v4 as uuidv4} from 'uuid'
-import {randomUUID} from "node:crypto";
-import {Garden} from "../pages/gardens/GardensPage.tsx";
+import {useNavigate} from "react-router-dom";
 
 const AddGardenForm = () => {
     const [gardenId, setGardenId] = useState<string | undefined>(undefined)
     const[createdTimestamp, setCreatedTimestamp] = useState("")
     const[formPayload, setFormPayload] = useState<{ [p: string]: string | File }>({})
     const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -16,7 +17,7 @@ const AddGardenForm = () => {
 
         setGardenId(uuidv4())
         setCreatedTimestamp(new Date().toISOString())
-        setFormPayload(payload) // why is this flagged as a problem? I think it works?
+        setFormPayload(payload)
     }
 
     useEffect(() => {
@@ -41,6 +42,7 @@ const AddGardenForm = () => {
                     throw new Error('Failed to add garden');
                 }
                 console.log("your garden has been added :-)")
+                navigate("/gardens")
             }).catch(error => {
                 console.error("There was an error with the fetch request:", error);
             })
