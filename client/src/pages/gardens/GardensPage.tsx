@@ -14,7 +14,8 @@ export interface Garden {
 }
 
 const GardensPage = () => {
-    const {data, isPending, error} = useFetch<Garden[]>('http://localhost:9000/internal/gardens')
+    const backendURL = import.meta.env.VITE_BACKEND_URL
+    const {data, isPending, error} = useFetch<Garden[]>(`${backendURL}/internal/gardens`)
 
     return (
             <div className="garden-list flex items-center justify-center mt-20 ">

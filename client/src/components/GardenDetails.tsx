@@ -6,7 +6,9 @@ import GardenList from "./GardenList.tsx";
 
 const GardenDetails = () => {
     const {gardenId} = useParams<{gardenId: string}>()
-    const {data, isPending, error} = useFetch<Garden>('http://localhost:9000/internal/gardens/' + gardenId)
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const {data, isPending, error} = useFetch<Garden>(`${backendURL}/internal/gardens/` + gardenId)
+
 
     return (
             <div className="garden-details garden-list flex items-center justify-center mt-20">

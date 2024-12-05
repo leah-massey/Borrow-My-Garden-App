@@ -13,6 +13,7 @@ services:
 
   borrow-my-garden-backend:
     build:
+      #the location of the Dockerfile for this image
       context: .
     #image: borrow-my-garden-backend
     container_name: borrow-my-garden-backend-container
@@ -29,6 +30,20 @@ services:
     depends_on:
         - borrow-my-garden-db  # Ensure backend waits for the DB service to be ready
 
+  borrow-my-garden-frontend:
+    build:
+      context: ./client
+      args:
+       - VITE_BACKEND_URL=http://borrow-my-garden-backend:9000
+    container_name: borrow-my-garden-frontend-container
+    networks:
+      - borrow-my-garden-network
+    ports:
+      - "5173:5173"
+    depends_on:
+      - borrow-my-garden-backend
+    environment:
+      - VITE_BACKEND_URL=http://localhost:9000
 
 networks:
   borrow-my-garden-network:

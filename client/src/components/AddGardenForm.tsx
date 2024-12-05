@@ -7,6 +7,7 @@ const AddGardenForm = () => {
     const [gardenId, setGardenId] = useState<string | undefined>(undefined)
     const[createdTimestamp, setCreatedTimestamp] = useState("")
     const[formPayload, setFormPayload] = useState<{ [p: string]: string | File }>({})
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -31,7 +32,7 @@ const AddGardenForm = () => {
                 createdTimestamp: createdTimestamp,
                 gardenOwnerId: formPayload.gardenOwnerId,
             }
-            fetch('http://localhost:9000/internal/gardens', {
+            fetch(`${backendURL}/internal/gardens`, {
                 method: 'POST',
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(garden)
