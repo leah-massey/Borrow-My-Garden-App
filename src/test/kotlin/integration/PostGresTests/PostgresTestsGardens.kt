@@ -109,6 +109,22 @@ class PostgresTestsGardens {
         }
     }
 
+    @Test
+    fun `given a garden id that is not in the database, then a GardenNotFound error is thrown`() {
+        val garden1UserId = UUID.fromString("c02968a7-e251-4981-800d-a9afa302aacd")
+        val garden2UserId = UUID.fromString("d09feb24-3506-43f0-8e98-86b3c820615b")
+        val incorrectUserId = UUID.fromString("fec87b5c-4a54-4577-be15-dde99024b3e3")
+
+        transaction(testDatabase) {
+            GardensTable.insert(garden1.copy(id = garden1UserId))
+            GardensTable.insert(garden2.copy(id = garden2UserId))
+
+            assertThrows <GardenNotFoundException> { GardensTable.findGardenById(incorrectUserId)
+            }
+        }
+
+    }
+
 //    @Test
 //    fun `a garden can have the title updated`() {
 //        // given

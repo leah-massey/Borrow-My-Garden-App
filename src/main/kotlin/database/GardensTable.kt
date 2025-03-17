@@ -34,6 +34,7 @@ fun GardensTable.findGardenById(gardenId: UUID): Garden {
 fun GardensTable.addGardenToDB(garden: Garden) = GardensTable.insert(garden)
 
 fun GardensTable.deleteGardenFromDB(gardenId: UUID) = GardensTable.deleteWhere { GardensTable.id eq gardenId}
+// TODO handle case where garden does not exist
 
 fun GardensTable.updateGardenInDB(gardenId: UUID, data: Map<String, Any>) = GardensTable.update ({ GardensTable.id eq gardenId}) {
    data.forEach { (key, value) ->
@@ -44,6 +45,7 @@ fun GardensTable.updateGardenInDB(gardenId: UUID, data: Map<String, Any>) = Gard
        }
    }
 }
+// TODO handle case where garden does not exist
 
 fun ResultRow.toGarden(): Garden {
     val id = this[GardensTable.id]
