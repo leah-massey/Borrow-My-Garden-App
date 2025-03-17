@@ -34,8 +34,15 @@ fun GardensTable.findGardenById(gardenId: UUID): Garden {
 
 fun GardensTable.addGardenToDB(garden: Garden) = GardensTable.insert(garden)
 
-fun GardensTable.deleteGardenFromDB(gardenId: UUID) = GardensTable.deleteWhere { GardensTable.id eq gardenId }
-// TODO handle case where garden does not exist
+fun GardensTable.deleteGardenFromDB(gardenId: UUID) {
+    // check that garden exists
+    GardensTable.selectAll()
+        .filter { it[GardensTable.id] == gardenId }
+        .firstOrNull() ?: throw GardenNotFoundException(gardenId)
+
+    GardensTable.deleteWhere { GardensTable.id eq gardenId }
+}
+
 
 fun GardensTable.updateGardenInDB(gardenId: UUID, data: Map<String, Any>) {
 

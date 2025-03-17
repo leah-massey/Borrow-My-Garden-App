@@ -4,8 +4,6 @@ package com.example.PostGresTests
 import com.example.database.*
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
-import com.natpryce.hamkrest.assertion.assertThat
-import jdk.internal.net.http.common.Pair.pair
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.BeforeEach
@@ -126,23 +124,6 @@ class PostgresTestsGardens {
 
     }
 
-//    @Test
-//    fun `a garden can have the title updated`() {
-//        // given
-//        transaction(testDatabase) {
-//            GardensTable.insert(garden1)
-//            GardensTable.insert(garden2)
-//
-//            // when
-//            GardensTable.updateGardenInDB(garden1.id, mapOf("title" to "New Title"))
-//
-//            val updatedTitle: String = GardensTable.findGardenById(garden1.id).title
-//
-//            // then
-//            assertEquals("New Title", updatedTitle )
-//        }
-//    }
-
     @Test
     fun `Given a user requests a garden, if the garden is not present in the DB, return GardenNotFoundException`() {
 
@@ -170,6 +151,33 @@ class PostgresTestsGardens {
             ) }
         }
     }
+
+    @Test
+    fun `Given a user requests to delete a garden, if the garden does not exist, return GardenNotFoundException`() {
+        // given
+        val gardenId = UUID.fromString("435e4c11-c9c9-40f5-aa2e-7080899e9f4c")
+
+        transaction(testDatabase) {
+            assertThrows<GardenNotFoundException> { GardensTable.deleteGardenFromDB(gardenId) }
+        }
+    }
+
+    //    @Test
+//    fun `a garden can have the title updated`() {
+//        // given
+//        transaction(testDatabase) {
+//            GardensTable.insert(garden1)
+//            GardensTable.insert(garden2)
+//
+//            // when
+//            GardensTable.updateGardenInDB(garden1.id, mapOf("title" to "New Title"))
+//
+//            val updatedTitle: String = GardensTable.findGardenById(garden1.id).title
+//
+//            // then
+//            assertEquals("New Title", updatedTitle )
+//        }
+//    }
 }
 
 
