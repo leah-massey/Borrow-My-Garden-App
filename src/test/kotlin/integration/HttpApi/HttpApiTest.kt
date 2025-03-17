@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.http4k.core.*
 import org.http4k.format.Jackson.mapper
+import java.util.*
 
 class HttpApiTest : IntegrationTest() {
     @Test
@@ -27,6 +28,28 @@ class HttpApiTest : IntegrationTest() {
         // then
         assertEquals(Status.OK, response.status)
         assertEquals(mapper.writeValueAsString(garden), response.bodyString())
+    }
+
+    @Test
+    fun `GET internal_gardens_{gardenId} returns a 404 not found status when the garden is not present in the database`() {
+        // given
+        val user = randomActiveUser()
+        val garden = randomGarden(user)
+
+        scenario.appTestDatabase.add(garden)
+
+        val gardenNotInDb = UUID.fromString("cefe78ea-a631-4631-9a47-a48d33415e9e")
+
+        // when
+        val request = Request(
+            Method.GET,
+            "internal/gardens/${gardenNotInDb}"
+        )
+        val response = scenario.testApp.app(request)
+
+        // then
+        assertEquals(response.status, Status.NOT_FOUND)
+
     }
 
     @Test

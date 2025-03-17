@@ -1,6 +1,7 @@
 package com.example.Adapters
 
 import com.example.Ports.WriteDomain
+import com.example.database.GardenNotFoundException
 import com.example.domain.models.Garden
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -8,6 +9,7 @@ import org.http4k.core.*
 import org.http4k.filter.CorsPolicy
 import org.http4k.filter.ServerFilters
 import org.http4k.format.Jackson.auto
+import org.http4k.format.Jackson.mapper
 import org.http4k.routing.bind
 import org.http4k.routing.path
 import org.http4k.routing.routes
@@ -46,13 +48,17 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
 
         "internal/gardens/{gardenId}" bind Method.GET to { request: Request ->
             val gardenId: UUID = UUID.fromString(request.path("gardenId"))
-            val garden: Garden? = readDomain.viewSingleGarden(gardenId)
-            val gardenAsJsonString: String = mapper.writeValueAsString(garden)
 
+            try {
+               val garden =  readDomain.viewSingleGarden(gardenId)
+                val gardenAsJsonString: String = mapper.writeValueAsString(garden)
+                Response(Status.OK)
+                    .body(gardenAsJsonString)
+                    .header("content-type", "application/json")
+            } catch (e: GardenNotFoundException) {
+                Response(Status.NOT_FOUND)
+            }
 
-            Response(Status.OK)
-                .body(gardenAsJsonString)
-                .header("content-type", "application/json")
         },
 
         "internal/gardens/{gardenId}" bind Method.DELETE to {request: Request ->
