@@ -5,6 +5,7 @@ import com.example.database.*
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
 import com.natpryce.hamkrest.assertion.assertThat
+import jdk.internal.net.http.common.Pair.pair
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.BeforeEach
@@ -143,7 +144,7 @@ class PostgresTestsGardens {
 //    }
 
     @Test
-    fun `if a garden is not present in the DB, return GardenNotFoundException`() {
+    fun `Given a user requests a garden, if the garden is not present in the DB, return GardenNotFoundException`() {
 
         // given
         val gardenId = UUID.fromString("5bd56dc9-4386-4eae-b333-f71b28a54432")
@@ -154,6 +155,19 @@ class PostgresTestsGardens {
 
             // then
             assertThrows<GardenNotFoundException>{ GardensTable.findGardenById(gardenId) }
+        }
+    }
+
+    @Test
+    fun `Given a user requests to update a garden, if a garden is not present in the DB, return GardenNotFoundException`() {
+        // given
+        val gardenId = UUID.fromString("435e4c11-c9c9-40f5-aa2e-7080899e9f4c")
+
+        transaction(testDatabase) {
+            assertThrows<GardenNotFoundException> { GardensTable.updateGardenInDB(
+                gardenId = gardenId,
+                data = mapOf(Pair("title", "new name"))
+            ) }
         }
     }
 }
