@@ -124,4 +124,18 @@ class HttpApiTest : IntegrationTest() {
         assertEquals(Status.OK, patchResponse.status)
         assertEquals("Test Garden Updated Title", updatedGarden["title"].asText())
     }
+
+    @Test
+    fun `Given a garden id that does not exist in the database, PATCH internal_gardens_{gardenId} returns a garden a 404 not found error`() {
+        // when
+        val patchRequest = Request(
+            Method.PATCH,
+            "internal/gardens/${UUID.randomUUID()}"
+        ).body("""{"title": "Test Garden Updated Title"}""")
+            .header("content-type", "application/json")
+
+        val patchResponse = scenario.testApp.app(patchRequest)
+
+        assertEquals(patchResponse.status, Status.NOT_FOUND)
+    }
 }

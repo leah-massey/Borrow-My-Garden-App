@@ -78,9 +78,15 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
             val patchDataLens = Body.auto<Map<String, Any>>().toLens()
             val patchData  = patchDataLens(request)
 
-            writeDomain.updateGarden(gardenId, patchData)
 
-            Response(Status.OK)
+            try {
+                writeDomain.updateGarden(gardenId, patchData)
+                Response(Status.OK)
+            }
+            catch (e: GardenNotFoundException) {
+                Response(Status.NOT_FOUND)
+            }
+
         },
 
         "ping" bind Method.GET to { request: Request ->
