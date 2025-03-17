@@ -63,9 +63,14 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
 
         "internal/gardens/{gardenId}" bind Method.DELETE to {request: Request ->
             val gardenId: UUID = UUID.fromString(request.path("gardenId"))
-            writeDomain.deleteGarden(gardenId)
 
-            Response(Status.OK)
+            try {
+                writeDomain.deleteGarden(gardenId)
+                Response(Status.OK)
+            } catch (e: GardenNotFoundException) {
+                Response(Status.NOT_FOUND)
+            }
+
         },
 
         "internal/gardens/{gardenId}" bind Method.PATCH to { request: Request ->

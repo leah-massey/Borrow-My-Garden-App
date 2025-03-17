@@ -94,6 +94,20 @@ class HttpApiTest : IntegrationTest() {
     }
 
     @Test
+    fun `Given a garden does not exist in the database DELETE internal_gardens_{gardenId} returns a 404 Not Found response`() {
+        // when
+        val deleteRequest = Request(
+            Method.DELETE,
+            "internal/gardens/${UUID.randomUUID()}"
+        )
+
+        val response = scenario.testApp.app(deleteRequest)
+
+        // then
+        assertEquals(Status.NOT_FOUND, response.status)
+    }
+
+    @Test
     fun `PATCH internal_gardens_{gardenId} returns a garden with an updated title and a 200 status`() {
         // given
         val user = randomActiveUser()
