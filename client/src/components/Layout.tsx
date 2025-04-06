@@ -17,7 +17,7 @@ const Layout = () => {
                         <Link to='/gardens' className="list-none">Gardens</Link>
                     </li>
                     <li>
-                        <a className="hover:text-gray-500" href="#">Link</a>
+                        <Link to={'/login'} className="hover:text-gray-500" href="#">Log in</Link>
                     </li>
                     <li>
                         <a className="hover:text-gray-500" href="#">Link</a>

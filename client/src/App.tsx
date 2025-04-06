@@ -6,6 +6,9 @@ import HomePage from "./pages/homePage/HomePage.tsx";
 import GardenDetails from "./components/GardenDetails.tsx";
 import AddGardenForm from "./components/AddGardenForm.tsx";
 import {ChakraProvider} from '@chakra-ui/react'
+import LoginPage from "./pages/loginPage/LoginPage.tsx";
+import SignUpPage from "./pages/SignUpPage.tsx";
+
 
 
 const App = () => {
@@ -20,6 +23,8 @@ const App = () => {
                             <Route path={"gardens"} element={<GardensPage/>}/>
                             <Route path={"gardens/:gardenId"} element={<GardenDetails/>}/>
                             <Route path={"add-garden"} element={<AddGardenForm/>}/>
+                            <Route path={"login"} element={<LoginPage/>}/>
+                            <Route path={"sign-up"} element={<SignUpPage/>}/>
                         </Route>
                     </Routes>
                 </BrowserRouter>
