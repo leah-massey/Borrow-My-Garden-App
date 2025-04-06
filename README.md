@@ -139,7 +139,7 @@ This can be done by running the following command from the root of the applicati
   You will see your new Containers listed here with their respective status' and the ports that they are running on.
 
 
-- You can now navigate to http://localhost:5173 to view this application in the browser. 
+- You can now navigate to http://localhost:5173/gardens to view this application in the browser. 
 
   
 
