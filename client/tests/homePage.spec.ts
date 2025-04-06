@@ -9,9 +9,9 @@ test('has title', async({ page}) => {
 test('can navigate to individual garden link', async ({ page}) => {
     await page.goto('http://localhost:5173/gardens');
 
-    await page.getByRole('link', {name: 'Garden with good soil'}).click();
+    await page.getByRole('link', {name: 'Rose Garden'}).click();
 
-    await expect(page.getByRole('heading', {name: 'Garden with good soil'})).toBeVisible();
+    await expect(page.getByRole('heading', {name: 'Rose Garden'})).toBeVisible();
 })
 
 test('can navigate to a form page for adding a garden', async ({page}) => {
