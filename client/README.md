@@ -21,6 +21,11 @@ Navigate to the /client directory
 
 </details>
 
+To run tests:  
+from the client root:
+`npx playwright test tests/[test name].spec.ts`
+`
+
 ___
 
 ⛔️ TEMPLATE BELOW - UPDATE TODO 
