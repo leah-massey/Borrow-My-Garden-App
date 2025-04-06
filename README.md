@@ -97,53 +97,64 @@ ___
     <h2 id="getting-started" style="display: inline; margin: 0;">👩🏼‍💻 Getting Started</h2>
   </summary>
 
-- Ensure gradle installed\
-  ```gradle -v```
+1. Clone this repository
 
-- Build the application ??? do I need to do this? \
+2. Build the application\
   ```./gradlew build```
 
-#### Option 1 - Using Docker:
-Using Docker will set the project up quickly and avoid dependency issues.
+3. Spin up application (see 2 options below)
 
-Firstly you will need to create a network for our Docker Containers. 
+<h3> Option 1 - Using Docker:</h3>
+Using Docker to spin up this application will set the project up quickly and avoid dependency issues.
+
+Firstly you will need to create a network for the Docker Containers. 
 
 - Create an account in [Docker](https://login.docker.com/u/login/identifier?state=hKFo2SB1RVBzWTNlZDBRci16alAxNTRTV1Vwckd2Vkczb1AxTaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIF83Q1ZTRXNBUGUtRWxYLTFpZmlSb2hyeEg3Rk1YcUZro2NpZNkgRmkyQ0VleDZtMzhkS1lxdnZaWVljSms5SUN0cGc3ZzQ)
 
 
-- Install and start Docker Desktop (you should see the logo in the RH of the browser tab)
+- Install and start Docker Desktop
 
 
-- Authenticate your Docker client with a Docker registry:\
+- Authenticate your Docker client with a Docker registry in the terminal:\
   ```docker login```\
-  You will be asked to enter your username and password for your Docker account.
+  You might be asked to enter your username and password for your Docker account.
   You should then see: ```Login Succeeded```
 
-  <h3>1. Setting Up The Docker Containers</h3>
+<h4>Setting Up The Docker Containers</h3>
   <p> 
-From the root of this app:
-Build and run the Docker DB container and build the Backend image and run as a container: 
+Build the images and start running the containers for the following:
+
+- Borrow My Garden Database
+- Borrow My Garden Backend
+- Borrow My Garden Frontend
+
+This can be done by running the following command from the root of the application which reads the `docker-compose.yml`.
 
   ```shell
   docker compose up -d 
   ```
 
-- To view list of Docker Containers \
-  ```docker ps```\
-  You will see your new Containers listed here with their respective status'.\
+
+- To view list of Docker Containers : ```docker ps```\
+  You will see your new Containers listed here with their respective status' and the ports that they are running on.
+
+
+- You can now navigate to http://localhost:5173 to view this application in the browser. 
 
   
 
 #### Option 2 - running directly with Gradle :
 
-if you want to ??? 
+- Start the backend server from the root of the application:
 
-- From the root of the project
-
-- Start the server
   ```./gradlew run```
 
-** Note Backend server must be started before the Client side server (To start Client side server see client/README.md for instructions)
+
+- Start the client side server:
+
+  Open a new terminal in the IDE. From here, follow the instructions in `client/README.md` to get the client side server up and running and to view the application the browser.
+
+** Note Backend server must be started before the Client side server 
 </p>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 </details>
