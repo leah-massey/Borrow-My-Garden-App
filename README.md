@@ -4,7 +4,9 @@
 <div align="center">
 <p>Borrow My Garden is a learning project that is built with a React FE, a Kotlin BE and Postgres DB.<br>The purpose of this project is to build a functioning application, fully tested using TDD. 
 </p>
+  I am tracking progress, planning and making tickets here: https://trello.com/b/pBtwDfLd/borrow-my-garden
 </div>
+
 
 ___
 
