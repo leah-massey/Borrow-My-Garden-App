@@ -97,6 +97,8 @@ ___
     <h2 id="getting-started" style="display: inline; margin: 0;">👩🏼‍💻 Getting Started</h2>
   </summary>
 
+* Note, when following the below steps, I have noticed a short delay before the front end is available / working in the browser. If you expereince this, please wait a minute and refresh!
+
 1. Clone this repository
 
 2. Build the application\
