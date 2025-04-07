@@ -99,14 +99,13 @@ ___
     <h2 id="getting-started" style="display: inline; margin: 0;">👩🏼‍💻 Getting Started</h2>
   </summary>
 
-‼ Note, when following the below steps, I have noticed a short delay before the front end is available / working in the browser. If you expereince this, please wait a minute and refresh!
-
 1. Clone this repository
 
 2. Build the application\
   ```./gradlew build```
 
 3. Spin up application (see 2 options below)
+   ‼ Note, when following the below steps, I have noticed a short delay before the front end is available / working in the browser. If you experience this, please wait a minute and refresh!
 
 <h3> Option 1 - Using Docker:</h3>
 Using Docker to spin up this application will set the project up quickly and avoid dependency issues.
