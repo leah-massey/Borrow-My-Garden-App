@@ -1,17 +1,21 @@
 import com.example.domain.models.Garden
 import com.example.domain.models.GardenStatus
-import com.example.domain.models.MembershipStatus
 import com.example.domain.models.User
 import java.time.LocalDateTime
 import java.util.*
 
 open class IntegrationTest {
 
-    fun randomActiveUser(): User = User(
+    fun randomUser(): User = User(
         id = UUID.randomUUID(),
         firstName = "Ben",
         secondName = "Smith",
-        membershipStatus = MembershipStatus.ACTIVE
+        email = "ben@ben.com",
+    ) fun randomNewUser(firstName: String, secondName: String, email: String ): User = User(
+        id = UUID.randomUUID(),
+        firstName = firstName,
+        secondName = secondName,
+        email = email,
     )
 
     fun randomGarden(user: User): Garden = Garden(
