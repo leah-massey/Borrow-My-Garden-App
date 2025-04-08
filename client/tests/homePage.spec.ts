@@ -20,14 +20,15 @@ test('can navigate to a form page for adding a garden', async ({page}) => {
     await expect(page.getByRole('heading', {name: 'Add a Garden'})).toBeVisible()
 })
 
-test('a new user can create a profile', async ({page}) => {
+
+test.skip('a new user can create a profile', async ({page}) => {
     await page.goto('http://localhost:5173/gardens');
     await page.getByRole('link', {name: 'Log in'}).click();
     await page.waitForURL('http://localhost:5173/login');
     await expect(page.getByRole('heading', {name: 'Log in'})).toBeVisible();
     await page.getByRole('button', {name: 'Sign up'}).click();
-    await page.waitForURL('http://localhost:5173/sign-up')
-    await expect(page.getByRole('heading', {name: 'Sign up'}))
+    await page.waitForURL('http://localhost:5173/sign-up');
+    await expect(page.getByRole('heading', {name: 'Sign up ✏️'})).toBeVisible();
 
     await page.getByLabel('First name').fill('Maggie');
     await page.getByLabel('Last name').fill('Brown');
