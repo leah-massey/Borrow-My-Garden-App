@@ -37,6 +37,5 @@ test.skip('a new user can create a profile', async ({page}) => {
     // profile image is optional
     await page.getByLabel('Bio').fill('Looking for a garden');
     await page.getByRole('button', {name: 'Submit'}).click();
-    await page.waitForURL('http://localhost:5173/welcome');
-    await expect(page.getByRole('heading', {name: 'Thanks for signing up, Maggie!'})).toBeVisible()
+    await page.waitForURL('http://localhost:5173/login');
 })
