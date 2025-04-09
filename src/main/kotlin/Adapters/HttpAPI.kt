@@ -1,7 +1,9 @@
 package com.example.Adapters
 
-import com.example.Ports.WriteDomain
+import Ports.UserWriteDomain
+import com.example.Ports.GardenWriteDomain
 import com.example.domain.models.Garden
+import com.example.domain.models.User
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.http4k.core.*
@@ -13,14 +15,18 @@ import org.http4k.routing.path
 import org.http4k.routing.routes
 import java.util.UUID
 
-class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain) {
+class HttpAPI(
+    gardenReadDomain: com.example.Ports.GardenReadDomain,
+    gardenWriteDomain: GardenWriteDomain,
+    userWriteDomain: UserWriteDomain
+) {
     val cors = ServerFilters.Cors(CorsPolicy.UnsafeGlobalPermissive)
 
     val app: HttpHandler = cors.then(routes(
 
         "internal/gardens" bind Method.GET to { request: Request ->
             // ask about testing the read domain and also the db
-            val gardens: List<Garden> = readDomain.viewGardens()
+            val gardens: List<Garden> = gardenReadDomain.viewGardens()
             val gardensAsJsonString: String = mapper.writeValueAsString(gardens)
 
             Response(Status.OK)
@@ -34,7 +40,7 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
             val gardenLens = Body.auto<Garden>().toLens()
             val newGarden: Garden = gardenLens(request)
 
-            writeDomain.addGarden(newGarden)
+            gardenWriteDomain.addGarden(newGarden)
 
             Response(Status.CREATED)
         },
@@ -46,7 +52,7 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
 
         "internal/gardens/{gardenId}" bind Method.GET to { request: Request ->
             val gardenId: UUID = UUID.fromString(request.path("gardenId"))
-            val garden: Garden? = readDomain.viewSingleGarden(gardenId)
+            val garden: Garden? = gardenReadDomain.viewSingleGarden(gardenId)
             val gardenAsJsonString: String = mapper.writeValueAsString(garden)
 
 
@@ -57,7 +63,7 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
 
         "internal/gardens/{gardenId}" bind Method.DELETE to {request: Request ->
             val gardenId: UUID = UUID.fromString(request.path("gardenId"))
-            writeDomain.deleteGarden(gardenId)
+            gardenWriteDomain.deleteGarden(gardenId)
 
             Response(Status.OK)
         },
@@ -72,9 +78,21 @@ class HttpAPI(readDomain: com.example.Ports.ReadDomain, writeDomain: WriteDomain
             val patchDataLens = Body.auto<Map<String, Any>>().toLens()
             val patchData  = patchDataLens(request)
 
-            writeDomain.updateGarden(gardenId, patchData)
+            gardenWriteDomain.updateGarden(gardenId, patchData)
 
             Response(Status.OK)
+        },
+
+        "internal/create-user" bind Method.POST to { request: Request ->
+            request.header("content-type", "application/json")
+
+            val userLens = Body.auto<User>().toLens()
+            val newUser = userLens(request)
+
+            userWriteDomain.createUser(newUser)
+            // TODO test if user email already registered
+
+            Response(Status.CREATED)
         },
 
         "ping" bind Method.GET to { request: Request ->

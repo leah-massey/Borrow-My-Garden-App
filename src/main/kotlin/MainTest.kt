@@ -1,17 +1,5 @@
 package com.example
 
-import com.example.Adapters.GardensPostgresRepo
-import com.example.Adapters.HttpAPI
-import com.example.Ports.GardensRepo
-import com.example.domain.ReadDomain
-import com.example.domain.WriteDomain
-import org.http4k.core.HttpHandler
-import org.http4k.core.then
-import org.http4k.filter.DebuggingFilters
-import org.http4k.server.SunHttp
-import org.http4k.server.asServer
-import org.postgresql.ds.PGSimpleDataSource
-
 //class MainTest {
 //
 //        val gardensRepoDatasource: GardensRepo = GardensPostgresRepo(PGSimpleDataSource().apply {

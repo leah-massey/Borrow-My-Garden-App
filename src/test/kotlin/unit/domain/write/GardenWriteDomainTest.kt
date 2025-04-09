@@ -1,13 +1,13 @@
-package unit.domain
+package unit.domain.write
 
 import com.example.Ports.GardensRepo
-import com.example.domain.WriteDomain
+import com.example.domain.GardenWriteDomain
 import com.example.domain.models.Garden
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import java.util.*
 
-class WriteDomainTest {
+class GardenWriteDomainTest {
     @Test
     fun `the add garden method is triggered in the GardensRepo`() {
         //is there a better way of testing this?
@@ -23,7 +23,7 @@ class WriteDomainTest {
         )
 
         val mockGardenRepo: GardensRepo = Mockito.mock(GardensRepo::class.java)
-        val writeDomain = WriteDomain(mockGardenRepo)
+        val writeDomain = GardenWriteDomain(mockGardenRepo)
         // when
         writeDomain.addGarden(newGarden)
         //then
@@ -34,7 +34,7 @@ class WriteDomainTest {
     fun `the delete method is triggered in the GardensRepo`() {
         // given
         val mockGardenRepo: GardensRepo = Mockito.mock(GardensRepo::class.java)
-        val writeDomain = WriteDomain(mockGardenRepo)
+        val writeDomain = GardenWriteDomain(mockGardenRepo)
 
         val gardenToBeDeleted = Garden(
             id = UUID.fromString("de5ef0e7-0dbe-479c-a7c8-9f12db7ce225"),
@@ -54,7 +54,7 @@ class WriteDomainTest {
     fun `the update method is triggered for a specified garden`() {
         // given
         val mockGardenRepo: GardensRepo = Mockito.mock(GardensRepo::class.java)
-        val writeDomain = WriteDomain(mockGardenRepo)
+        val writeDomain = GardenWriteDomain(mockGardenRepo)
 
         val gardenToBeUpdated = Garden(
             id = UUID.fromString("de5ef0e7-0dbe-479c-a7c8-9f12db7ce225"),
@@ -71,4 +71,6 @@ class WriteDomainTest {
         // then
         Mockito.verify(mockGardenRepo, Mockito.times(1)).update(gardenToBeUpdated.id, mapOf("title" to  "Very Sunny Garden"))
     }
+
+
 }

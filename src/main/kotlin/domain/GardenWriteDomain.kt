@@ -1,11 +1,13 @@
 package com.example.domain
 
+import Ports.UserRepo
 import com.example.Ports.GardensRepo
-import com.example.Ports.WriteDomain
+import com.example.Ports.GardenWriteDomain
 import com.example.domain.models.Garden
 import java.util.*
 
-class WriteDomain(val gardensRepo: GardensRepo): WriteDomain {
+class GardenWriteDomain(val gardensRepo: GardensRepo):
+    GardenWriteDomain {
 
     override fun addGarden(garden: Garden) = gardensRepo.add(garden)
 

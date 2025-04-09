@@ -1,21 +1,30 @@
+import Adapters.UserPostgresRepo
+import Ports.UserRepo
 import com.example.Adapters.GardensPostgresRepo
 import com.example.Adapters.HttpAPI
 import com.example.Ports.GardensRepo
-import com.example.domain.ReadDomain
-import com.example.domain.WriteDomain
+import com.example.domain.GardenReadDomain
+import com.example.domain.GardenWriteDomain
+import domain.UserWriteDomain
 
 import org.postgresql.ds.PGSimpleDataSource
 
 class TestScenario {
-    val appTestDatabase: GardensRepo =  GardensPostgresRepo(PGSimpleDataSource().apply {
+    val appTestGardensDatabase: GardensRepo =  GardensPostgresRepo(PGSimpleDataSource().apply {
         user = "postgres"
         databaseName = "borrow_my_garden_test_db"
     })
 
-    private val readDomain = ReadDomain(appTestDatabase)
-    private val writeDomain = WriteDomain(appTestDatabase)
+    val appTestUserDatabase: UserRepo = UserPostgresRepo(PGSimpleDataSource().apply {
+        user = "postgres"
+        databaseName = "borrow_my_garden_test_db"
+    })
 
-    private val httpAPI = HttpAPI(readDomain, writeDomain)
+    private val gardenReadDomain = GardenReadDomain(appTestGardensDatabase)
+    private val gardenWriteDomain = GardenWriteDomain(appTestGardensDatabase)
+    private val userWriteDomain = UserWriteDomain(appTestUserDatabase)
+
+    private val httpAPI = HttpAPI(gardenReadDomain, gardenWriteDomain, userWriteDomain)
 
     val testApp = TestApp(httpAPI)
 

@@ -1,11 +1,11 @@
 package com.example.domain
 
 import com.example.Ports.GardensRepo
-import com.example.Ports.ReadDomain
+import com.example.Ports.GardenReadDomain
 import com.example.domain.models.Garden
 import java.util.*
 
-class ReadDomain(val gardensRepo: GardensRepo): ReadDomain {
+class GardenReadDomain(val gardensRepo: GardensRepo): GardenReadDomain {
 
     override fun viewGardens(): List<Garden> {
         return gardensRepo.getAll()

@@ -1,8 +1,7 @@
-package unit.domain
+package unit.domain.read
 
 import com.example.Ports.GardensRepo
-import com.example.database.GardenNotFoundException
-import com.example.domain.ReadDomain
+import com.example.domain.GardenReadDomain
 import com.example.domain.models.Garden
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
@@ -11,7 +10,7 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 
-class ReadDomainTest {
+class GardenReadDomainTest {
     @Test
     fun `returns a list of gardens`() {
         // this is my test data - a list of gardens
@@ -37,7 +36,7 @@ class ReadDomainTest {
         val mockGardenRepo: GardensRepo = mock(GardensRepo::class.java)
         `when` (mockGardenRepo.getAll()).thenReturn(testGardens)
 
-        val undertest = ReadDomain(mockGardenRepo)
+        val undertest = GardenReadDomain(mockGardenRepo)
 
         val expected = testGardens
 
@@ -60,7 +59,7 @@ class ReadDomainTest {
         val mockGardenRepo: GardensRepo = mock(GardensRepo::class.java)
         `when` (mockGardenRepo.get(testGarden2.id)).thenReturn(testGarden2)
 
-        val underTest = ReadDomain(mockGardenRepo)
+        val underTest = GardenReadDomain(mockGardenRepo)
 
         val expected: Garden = testGarden2
 

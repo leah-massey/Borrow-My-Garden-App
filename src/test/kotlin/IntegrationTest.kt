@@ -11,11 +11,13 @@ open class IntegrationTest {
         firstName = "Ben",
         secondName = "Smith",
         email = "ben@ben.com",
+        password = "test123"
     ) fun randomNewUser(firstName: String, secondName: String, email: String ): User = User(
         id = UUID.randomUUID(),
         firstName = firstName,
         secondName = secondName,
         email = email,
+        password = "test123"
     )
 
     fun randomGarden(user: User): Garden = Garden(
@@ -29,7 +31,7 @@ open class IntegrationTest {
     )
 
     fun generateAndAddRandomGardensToDB(user: User, numberOfGardens: Int) =
-        repeat(numberOfGardens) { scenario.appTestDatabase.add(randomGarden(user)) }
+        repeat(numberOfGardens) { scenario.appTestGardensDatabase.add(randomGarden(user)) }
 
     private fun selectRandomStatus(): GardenStatus {
         return GardenStatus.entries.shuffled().first()
