@@ -5,7 +5,7 @@ import java.util.*
 data class User (
     val id: UUID,
     val firstName: String,
-    val secondName: String,
+    val lastName: String,
     val bio: String? = null,
     val profilePic: String? = null,
     val email: String,

@@ -1,7 +1,9 @@
 package com.example.PGTests
 
-import com.example.domain.models.MembershipStatus
 import com.example.domain.models.User
+import database.UsersTable
+import database.all
+import database.insert
 import org.jetbrains.exposed.sql.*
 
 
@@ -16,6 +18,43 @@ import kotlin.test.assertEquals
 
 //code for this yet to be written
 
+class PostgresTestsUser {
+    val testDataSource = PGSimpleDataSource().apply {
+        user = "postgres"
+        databaseName = "borrow_my_garden_test_db"
+    }
+
+    val testDatabase = Database.connect((testDataSource))
+
+    @BeforeEach
+    fun resetDB() {
+        transaction(testDatabase) {
+            SchemaUtils.drop(UsersTable)
+            SchemaUtils.createMissingTablesAndColumns(UsersTable)
+        }
+    }
+
+    @Test
+    fun `a user profile can be added to and retrieved from the database`() {
+        // given
+        val newUser = User(
+            id = UUID.randomUUID(),
+            firstName = "Elviz",
+            lastName = "Hemming",
+            email = "elviz@elviz.com",
+            password = "test123"
+        )
+
+        // when
+        transaction(testDatabase) {
+            UsersTable.insert(newUser)
+            val readUsers: List<User> = UsersTable.all()
+
+            // then
+            assertEquals(listOf(newUser), readUsers)
+        }
+    }
+}
 
 //class PostGresTestsUser {
 //

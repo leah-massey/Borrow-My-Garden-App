@@ -9,13 +9,13 @@ open class IntegrationTest {
     fun randomUser(): User = User(
         id = UUID.randomUUID(),
         firstName = "Ben",
-        secondName = "Smith",
+        lastName = "Smith",
         email = "ben@ben.com",
         password = "test123"
     ) fun randomNewUser(firstName: String, secondName: String, email: String ): User = User(
         id = UUID.randomUUID(),
         firstName = firstName,
-        secondName = secondName,
+        lastName = secondName,
         email = email,
         password = "test123"
     )

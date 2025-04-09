@@ -14,7 +14,7 @@ class UserWriteDomainTest {
         val newUser = User(
             id = UUID.randomUUID(),
             firstName = "Elviz",
-            secondName = "Hemming",
+            lastName = "Hemming",
             email = "elviz@elviz.com",
             password = "test123"
         )
