@@ -8,7 +8,7 @@ import org.http4k.core.*
 import org.http4k.format.Jackson.mapper
 import org.junit.jupiter.api.Disabled
 
-class HttpApiTest : IntegrationTest() {
+class EndpointTests : IntegrationTest() {
     @Test
     fun `GET internal_gardens_{gardenId} returns a single garden and 200 OK status`() {
         //given
