@@ -21,7 +21,7 @@ test('can navigate to a form page for adding a garden', async ({page}) => {
 })
 
 
-test.skip('a new user can create a profile', async ({page}) => {
+test('a new user can create a profile', async ({page}) => {
     await page.goto('http://localhost:5173/gardens');
     await page.getByRole('link', {name: 'Log in'}).click();
     await page.waitForURL('http://localhost:5173/login');
@@ -37,5 +37,5 @@ test.skip('a new user can create a profile', async ({page}) => {
     // profile image is optional
     await page.getByLabel('Bio').fill('Looking for a garden');
     await page.getByRole('button', {name: 'Submit'}).click();
-    await page.waitForURL('http://localhost:5173/login');
+    await page.waitForURL('http://localhost:5173/gardens');
 })
