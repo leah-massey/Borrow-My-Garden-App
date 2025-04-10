@@ -87,10 +87,10 @@ class HttpAPI(
             request.header("content-type", "application/json")
 
             val userLens = Body.auto<User>().toLens()
-            val newUser = userLens(request)
+            val newUser: User = userLens(request)
 
             userWriteDomain.createUser(newUser)
-            // TODO test if user email already registered
+            // test if user email already registered
 
             Response(Status.CREATED)
         },

@@ -103,7 +103,7 @@ class EndpointTests : IntegrationTest() {
         assertEquals("Test Garden Updated Title", updatedGarden["title"].asText())
     }
 
-    @Disabled
+
     @Test
     fun `POST internal_create-user returns a 201 created status`() {
         //given
@@ -113,7 +113,7 @@ class EndpointTests : IntegrationTest() {
         val request = Request(
             Method.POST,
             "internal/create-user"
-        ).body(mapper.writeValueAsString(userInJsonStringFormat))
+        ).body(userInJsonStringFormat)
 
         val response = scenario.testApp.app(request)
 
