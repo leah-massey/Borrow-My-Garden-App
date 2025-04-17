@@ -2,17 +2,6 @@ import org.gradle.api.JavaVersion.VERSION_11
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
-plugins {
-    kotlin("jvm") version "2.0.0"
-    id("org.flywaydb.flyway") version "10.0.0"
-    application
-}
-
-flyway {
-    url = "jdbc:h2:file:./target/foobar"
-    user = "sa"
-}
-
 buildscript {
     repositories {
         mavenCentral()
@@ -20,10 +9,19 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.h2database:h2:2.2.224")
+        classpath("org.flywaydb:flyway-gradle-plugin:8.5.13")
+        classpath("org.postgresql:postgresql:42.4.5")
     }
-
 }
+
+
+plugins {
+    kotlin("jvm") version "2.0.0"
+    id("org.flywaydb.flyway") version "8.5.13"
+    application
+}
+
+apply(plugin = "org.flywaydb.flyway")
 
 
 
@@ -76,6 +74,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-test")
     implementation("org.jetbrains.kotlin:kotlin-test-junit5") // check for test
     implementation("ch.qos.logback:logback-classic:1.5.6")
+    implementation("org.flywaydb:flyway-core:8.5.13")
 
 
     testImplementation("org.http4k:http4k-testing-approval:${http4kVersion}")
@@ -86,4 +85,13 @@ dependencies {
     testImplementation("org.mockito:mockito-core:3.+")
     testImplementation("ch.qos.logback:logback-classic:1.5.6")
 
+}
+
+flyway {
+    url = "jdbc:postgresql://localhost:5432/borrowmygarden"
+    user = "leahmassey"
+    password = "mysecretpassword"
+
+    locations = arrayOf("filesystem:src/main/resources/db/migration")
+    baselineOnMigrate = true
 }
