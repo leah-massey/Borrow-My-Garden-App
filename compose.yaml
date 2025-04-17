@@ -1,9 +1,12 @@
 services:
   borrow-my-garden-db:
+    # use the latest postgres image from DockerHub
     image: postgres:latest
     container_name: borrow-my-garden-db
+    # all services are part of the same network so that they can talk to each other
     networks:
       - borrow-my-garden-network
+    # connect to DB using port 5432
     ports:
       - "6543:5432"
     environment:
@@ -51,6 +54,6 @@ networks:
 
 volumes:
   borrow-my-garden-data:
-     # Define the volume for persistence driver: local
+     # Define the volume for persistence driver: local - note this is my local volume - another user will not see this.
     name: borrow-my-garden-data
     external: true
