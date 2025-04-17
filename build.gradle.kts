@@ -4,7 +4,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
     kotlin("jvm") version "2.0.0"
+    id("org.flywaydb.flyway") version "10.0.0"
     application
+}
+
+flyway {
+    url = "jdbc:h2:file:./target/foobar"
+    user = "sa"
 }
 
 buildscript {
@@ -14,8 +20,12 @@ buildscript {
     }
 
     dependencies {
+        classpath("com.h2database:h2:2.2.224")
     }
+
 }
+
+
 
 val http4kVersion: String by project
 val http4kConnectVersion: String by project
